@@ -97,6 +97,9 @@ awk \
 		}
 
 		if (keep[current_section]) {
+			if (current_section == "org/gnome/settings-daemon/plugins/color" && $0 ~ /^night-light-last-coordinates=/) {
+				next
+			}
 			if (!section_started) {
 				start_section(current_section)
 				section_started = 1
