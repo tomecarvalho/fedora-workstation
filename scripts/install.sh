@@ -22,6 +22,7 @@ ALL_STEPS=(
   docker
   snapper
   aliases
+  adwaita_mono_as_monospace
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -242,6 +243,29 @@ aliases() {
 
   ln -s "$source" "$target"
   echo "[aliases] Symlinked $source to $target"
+}
+
+adwaita_mono_as_monospace() {
+  echo "[adwaita_mono_as_monospace] Set Adwaita Mono as the monospace font system-wide"
+
+  mkdir -p ~/.config/fontconfig/conf.d
+
+  cat > ~/.config/fontconfig/conf.d/99-monospace-adwaita.conf <<'EOF'
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <alias>
+    <family>monospace</family>
+    <prefer>
+      <family>Adwaita Mono</family>
+    </prefer>
+  </alias>
+</fontconfig>
+EOF
+
+  sudo fc-cache -fv
+
+  echo "[adwaita_mono_as_monospace] Set Adwaita Mono as the monospace font"
 }
 
 usage() {
