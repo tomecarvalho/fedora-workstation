@@ -132,11 +132,12 @@ enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire
 favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack_slack.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
+compact-mode-enabled=false
 icon-brightness=0.0
 icon-contrast=0.0
 icon-opacity=240
 icon-saturation=0.0
-icon-size=0
+icon-size=24
 
 [org/gnome/shell/extensions/copyous]
 auto-hide-search=false
