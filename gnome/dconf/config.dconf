@@ -1,0 +1,194 @@
+[org/gnome/desktop/background]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='file:///usr/share/backgrounds/gnome/amber-l.jxl'
+picture-uri-dark='file:///usr/share/backgrounds/gnome/amber-d.jxl'
+primary-color='#ff7800'
+secondary-color='#000000'
+
+[org/gnome/desktop/input-sources]
+current=uint32 0
+mru-sources=[('xkb', 'us')]
+sources=[('xkb', 'us_pt')]
+xkb-options=['lv3:ralt_switch']
+
+[org/gnome/desktop/interface]
+accent-color='blue'
+clock-show-seconds=false
+clock-show-weekday=true
+color-scheme='prefer-dark'
+gtk-theme='Adwaita-dark'
+show-battery-percentage=false
+text-scaling-factor=1.25
+toolkit-accessibility=false
+
+[org/gnome/desktop/peripherals/keyboard]
+numlock-state=true
+
+[org/gnome/desktop/peripherals/mouse]
+natural-scroll=false
+
+[org/gnome/desktop/peripherals/touchpad]
+click-method='fingers'
+speed=0.30000000000000016
+two-finger-scrolling-enabled=true
+
+[org/gnome/desktop/privacy]
+remove-old-temp-files=true
+remove-old-trash-files=true
+report-technical-problems=true
+
+[org/gnome/desktop/search-providers]
+disabled=@as []
+enabled=@as []
+sort-order=['org.gnome.Settings.desktop', 'org.gnome.Contacts.desktop', 'org.gnome.Nautilus.desktop']
+
+[org/gnome/desktop/sound]
+event-sounds=true
+theme-name='__custom'
+
+[org/gnome/desktop/wm/keybindings]
+close=['<Shift><Alt>q']
+cycle-windows=@as []
+cycle-windows-backward=@as []
+maximize=@as []
+minimize=@as []
+move-to-monitor-down=['<Shift><Control><Super>j']
+move-to-monitor-left=['<Shift><Control><Super>h']
+move-to-monitor-right=['<Shift><Control><Super>l']
+move-to-monitor-up=['<Shift><Control><Super>k']
+move-to-workspace-1=['<Shift><Super>q']
+move-to-workspace-2=['<Shift><Super>w']
+move-to-workspace-3=['<Shift><Super>e']
+move-to-workspace-4=['<Shift><Super>r']
+move-to-workspace-5=['<Shift><Super>t']
+move-to-workspace-last=@as []
+move-to-workspace-left=@as []
+move-to-workspace-right=@as []
+switch-applications=@as []
+switch-applications-backward=@as []
+switch-group=['<Alt>Escape']
+switch-group-backward=['<Shift><Alt>Escape']
+switch-input-source=@as []
+switch-input-source-backward=@as []
+switch-to-workspace-1=['<Super>q']
+switch-to-workspace-2=['<Super>w']
+switch-to-workspace-3=['<Super>e']
+switch-to-workspace-4=['<Super>r']
+switch-to-workspace-5=['<Super>t']
+switch-to-workspace-last=@as []
+switch-to-workspace-left=@as []
+switch-to-workspace-right=@as []
+switch-windows=['<Alt>Tab']
+switch-windows-backward=['<Shift><Alt>Tab']
+toggle-maximized=['<Super>space']
+toggle-on-all-workspaces=['<Super>p']
+unmaximize=@as []
+
+[org/gnome/desktop/wm/preferences]
+button-layout='appmenu:close'
+num-workspaces=5
+resize-with-right-button=true
+
+[org/gnome/login-screen]
+enable-fingerprint-authentication=true
+enable-smartcard-authentication=false
+
+[org/gnome/mutter]
+attach-modal-dialogs=false
+dynamic-workspaces=false
+workspaces-only-on-primary=false
+
+[org/gnome/mutter/keybindings]
+toggle-tiled-left=['<Shift><Super>h']
+toggle-tiled-right=['<Shift><Super>l']
+
+[org/gnome/nautilus/icon-view]
+default-zoom-level='small-plus'
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='icon-view'
+migrated-gtk-settings=true
+
+[org/gnome/settings-daemon/plugins/color]
+night-light-enabled=true
+night-light-schedule-automatic=false
+night-light-schedule-from=0.0
+night-light-schedule-to=0.0
+night-light-temperature=uint32 3700
+
+[org/gnome/settings-daemon/plugins/media-keys]
+logout=['<Shift><Super>BackSpace']
+reboot=['<Control><Alt><Super>BackSpace']
+screensaver=['<Super>BackSpace']
+shutdown=['<Alt><Super>BackSpace']
+
+[org/gnome/settings-daemon/plugins/power]
+sleep-inactive-ac-type='nothing'
+
+[org/gnome/shell]
+disabled-extensions=['background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com']
+enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'appindicatorsupport@rgcjonas.gmail.com', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst']
+favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack_slack.desktop', 'spotify_spotify.desktop']
+
+[org/gnome/shell/extensions/appindicator]
+icon-brightness=0.0
+icon-contrast=0.0
+icon-opacity=240
+icon-saturation=0.0
+icon-size=0
+
+[org/gnome/shell/extensions/copyous]
+auto-hide-search=false
+clipboard-history='keep-all'
+clipboard-orientation='horizontal'
+clipboard-position-horizontal='fill'
+clipboard-position-vertical='top'
+clipboard-size=500
+database-backend='sqlite'
+delete-item-shortcut=['<Control>d']
+disable-hljs-dialog=false
+dynamic-item-height=false
+header-controls-visibility='visible'
+history-time=0
+item-height=170
+item-width=250
+open-clipboard-dialog-behavior='toggle'
+open-clipboard-dialog-shortcut=['<Super>v']
+send-notification=false
+show-at-cursor=false
+show-at-pointer=false
+show-content-indicator=false
+show-header=true
+show-indicator=false
+sound='none'
+toggle-incognito-mode-shortcut=['<Control><Super>v']
+
+[org/gnome/shell/extensions/copyous/file-item]
+file-preview-visibility='file-preview-or-file-info'
+
+[org/gnome/shell/extensions/copyous/link-item]
+link-preview-orientation='vertical'
+
+[org/gnome/shell/extensions/display-brightness-ddcutil]
+button-location=1
+ddcutil-binary-path='/usr/bin/ddcutil'
+ddcutil-sleep-multiplier=40.0
+decrease-brightness-shortcut=['<Control>XF86MonBrightnessDown']
+hide-system-indicator=true
+increase-brightness-shortcut=['<Control>XF86MonBrightnessUp']
+position-system-menu=3.0
+show-display-name=true
+show-osd=false
+show-value-label=false
+step-change-keyboard=2.0
+
+[org/gnome/shell/keybindings]
+toggle-message-tray=['<Super>b']
+
+[org/gnome/system/location]
+enabled=true
+
+[org/gtk/settings/color-chooser]
+custom-colors=[(0.14117647058823529, 0.57647058823529407, 0.93725490196078431, 1.0)]
+selected-color=(true, 0.14117647058823529, 0.57647058823529407, 0.93725490196078431, 1.0)
