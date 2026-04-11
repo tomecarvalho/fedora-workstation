@@ -23,6 +23,7 @@ ALL_STEPS=(
   snapper
   aliases
   adwaita_mono_as_monospace
+  adwaita_sans_as_sans_serif
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -266,6 +267,29 @@ EOF
   sudo fc-cache -fv
 
   echo "[adwaita_mono_as_monospace] Set Adwaita Mono as the monospace font"
+}
+
+adwaita_sans_as_sans_serif() {
+  echo "[adwaita_sans_as_sans_serif] Set Adwaita Sans as the sans-serif font system-wide"
+
+  mkdir -p ~/.config/fontconfig/conf.d
+
+  cat > ~/.config/fontconfig/conf.d/99-sans-serif-adwaita.conf <<'EOF'
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <alias>
+    <family>sans-serif</family>
+    <prefer>
+      <family>Adwaita Sans</family>
+    </prefer>
+  </alias>
+</fontconfig>
+EOF
+
+  sudo fc-cache -fv
+
+  echo "[adwaita_sans_as_sans_serif] Set Adwaita Sans as the sans-serif font"
 }
 
 usage() {
