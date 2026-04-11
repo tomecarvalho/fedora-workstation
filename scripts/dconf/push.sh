@@ -45,7 +45,71 @@ esac
 # Repo-root-relative path to the tracked dconf snapshot.
 CONFIG_FILE="gnome/dconf/config.dconf"
 mkdir -p "$(dirname "$CONFIG_FILE")"
-dconf dump / > "$CONFIG_FILE"
+
+TMP_CONFIG="$(mktemp)"
+trap 'rm -f "$TMP_CONFIG"' EXIT
+
+# Curated set of stable settings to keep under version control.
+DCONF_EXPORT_PATHS=(
+	"/org/gnome/desktop/background/"
+	"/org/gnome/desktop/interface/"
+	"/org/gnome/desktop/input-sources/"
+	"/org/gnome/desktop/peripherals/keyboard/"
+	"/org/gnome/desktop/peripherals/mouse/"
+	"/org/gnome/desktop/peripherals/touchpad/"
+	"/org/gnome/desktop/wm/keybindings/"
+	"/org/gnome/desktop/wm/preferences/"
+	"/org/gnome/mutter/"
+	"/org/gnome/mutter/keybindings/"
+	"/org/gnome/settings-daemon/plugins/media-keys/"
+	"/org/gnome/settings-daemon/plugins/color/"
+	"/org/gnome/settings-daemon/plugins/power/"
+	"/org/gnome/shell/keybindings/"
+	"/org/gnome/shell/extensions/appindicator/"
+	"/org/gnome/shell/extensions/copyous/"
+	"/org/gnome/shell/extensions/copyous/file-item/"
+	"/org/gnome/shell/extensions/copyous/link-item/"
+	"/org/gnome/shell/extensions/display-brightness-ddcutil/"
+	"/org/gnome/desktop/sound/"
+	"/org/gnome/login-screen/"
+	"/org/gnome/system/location/"
+	"/org/gtk/settings/color-chooser/"
+	"/org/gnome/desktop/search-providers/"
+	"/org/gnome/desktop/privacy/"
+	"/org/gnome/nautilus/preferences/"
+	"/org/gnome/nautilus/icon-view/"
+)
+
+for path in "${DCONF_EXPORT_PATHS[@]}"; do
+	dconf dump "$path" >> "$TMP_CONFIG"
+done
+
+# Keep selected root shell preferences while excluding transient keys.
+SHELL_ROOT_KEYS=(
+	"enabled-extensions"
+	"disabled-extensions"
+	"favorite-apps"
+)
+
+WROTE_SHELL_SECTION=false
+for key in "${SHELL_ROOT_KEYS[@]}"; do
+	value="$(dconf read "/org/gnome/shell/${key}" 2>/dev/null || true)"
+	if [[ -n "$value" ]]; then
+		if [[ "$WROTE_SHELL_SECTION" == false ]]; then
+			echo "[org/gnome/shell]" >> "$TMP_CONFIG"
+			WROTE_SHELL_SECTION=true
+		fi
+		echo "${key}=${value}" >> "$TMP_CONFIG"
+	fi
+done
+
+if [[ "$WROTE_SHELL_SECTION" == true ]]; then
+	echo >> "$TMP_CONFIG"
+fi
+
+[[ -s "$TMP_CONFIG" ]] || util_die "$ECHO_PREFIX" "Curated dconf export is empty; refusing to overwrite ${CONFIG_FILE}."
+mv "$TMP_CONFIG" "$CONFIG_FILE"
+trap - EXIT
 
 git add "$CONFIG_FILE"
 
