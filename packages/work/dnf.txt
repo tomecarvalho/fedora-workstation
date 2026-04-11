@@ -1,0 +1,7 @@
+gcc-c++
+globalprotect-openconnect
+golang
+libxcrypt-compat.x86_64
+openvpn
+postgresql
+sqlite

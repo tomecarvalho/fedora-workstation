@@ -1,0 +1,359 @@
+#!/usr/bin/env bash
+
+OH_MY_ZSH_INSTALL_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh"
+
+set -euo pipefail
+
+# Default, ordered list of descriptive step names
+ALL_STEPS=(
+  dnf_up
+  rpm_fusion
+  copr
+  dnf_install
+  dnf_uninstall
+  flatpak_install
+  snap_install
+  vscode
+  node
+  oh_my_zsh
+  oh_my_zsh_plugins
+  starship
+  docker
+  snapper
+  aliases
+)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ALIASES_DIR="$SCRIPT_DIR/../aliases"
+PKGS_DIR="$SCRIPT_DIR/../packages"
+GENERAL_PKGS_DIR="$PKGS_DIR/general"
+REMOVE_PKGS_DIR="$PKGS_DIR/remove"
+
+source "$SCRIPT_DIR/utils.sh"
+
+dnf_up() {
+  echo "[dnf_up] Update packages"
+  sudo dnf up -y --refresh
+}
+
+rpm_fusion() {
+  echo "[rpm_fusion] Enable RPM Fusion Free and Nonfree"
+
+  local fedora_version="$(rpm -E %fedora)"
+
+  sudo dnf in -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$fedora_version.noarch.rpm
+  sudo dnf in -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fedora_version.noarch.rpm
+}
+
+copr() {
+  echo "[copr] Enable COPR repositories"
+  
+  local copr_file="$GENERAL_PKGS_DIR/copr.txt"
+  local repos=($(read_package_list "$copr_file"))
+
+  echo "[copr] Enabling ${#repos[@]} COPR repositories..."
+
+  for repo in "${repos[@]}"; do
+    sudo dnf copr enable -y "$repo"
+  done
+}
+
+
+dnf_install() {
+  echo "[dnf_install] Install DNF packages"
+  
+  local pkg_file="$GENERAL_PKGS_DIR/dnf.txt"
+  local packages=($(read_package_list "$pkg_file"))
+
+  echo "[dnf_install] Installing ${#packages[@]} packages with dnf..."
+  sudo dnf in -y "${packages[@]}"
+}
+
+dnf_uninstall() {
+  echo "[dnf_uninstall] Uninstall unnecessary DNF packages"
+
+  local pkg_file="$REMOVE_PKGS_DIR/dnf.txt"
+  local packages=($(read_package_list "$pkg_file"))
+
+  if [[ ${#packages[@]} -eq 0 ]]; then
+    echo "[dnf_uninstall] No packages to uninstall"
+    return
+  fi
+
+  echo "[dnf_uninstall] Uninstalling ${#packages[@]} packages with dnf..."
+  sudo dnf rm -y "${packages[@]}"
+}
+
+flatpak_install() {
+  echo "[flatpak_install] Install Flatpak packages"
+
+  local pkg_file="$GENERAL_PKGS_DIR/flatpak.txt"
+  local packages=($(read_package_list "$pkg_file"))
+
+  if [[ ${#packages[@]} -eq 0 ]]; then
+    echo "[flatpak_install] No packages to install"
+    return
+  fi
+
+  echo "[flatpak_install] Installing ${#packages[@]} packages with flatpak..."
+  for package in "${packages[@]}"; do
+    flatpak install -y flathub "$package"
+  done
+}
+
+snap_install() {
+  echo "[snap_install] Install Snap packages"
+
+  local pkg_file="$GENERAL_PKGS_DIR/snap.txt"
+  local packages=($(read_package_list "$pkg_file"))
+
+  if [[ ${#packages[@]} -eq 0 ]]; then
+    echo "[snap_install] No packages to install"
+    return
+  fi
+
+  echo "[snap_install] Enabling snapd service..."
+  sudo systemctl enable --now snapd.socket
+  sudo ln -sf /var/lib/snapd/snap /snap 2>/dev/null || true
+
+  echo "[snap_install] Installing ${#packages[@]} packages with snap..."
+  for package in "${packages[@]}"; do
+    sudo snap install "$package"
+  done
+}
+
+vscode() {
+  if command -v code &> /dev/null; then
+    echo "[vscode] VS Code is already installed"
+    return
+  fi
+
+  echo "[vscode] Add VS Code repository and install Code"
+  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+  echo "[vscode] Install VS Code"
+  sudo dnf in -y code
+}
+
+oh_my_zsh() {
+  echo "[oh_my_zsh] Install oh-my-zsh"
+
+  if [[ -d "$HOME/.oh-my-zsh" ]]; then
+    echo "oh-my-zsh is already installed at $HOME/.oh-my-zsh"
+  else
+    sh -c "$(curl -fsSL $OH_MY_ZSH_INSTALL_URL)"
+  fi
+}
+
+oh_my_zsh_plugins() {
+  local plugins="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins"
+
+  echo "[oh_my_zsh_plugins] Install zsh-nvm"
+  git clone https://github.com/lukechilds/zsh-nvm "$plugins/zsh-nvm"
+
+  echo "[oh_my_zsh_plugins] Install zsh-autosuggestions"
+  git clone https://github.com/zsh-users/zsh-autosuggestions "$plugins/zsh-autosuggestions"
+}
+
+starship() {
+  echo "[starship] Install starship prompt"
+
+  if ! command -v starship &> /dev/null; then
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+  fi
+}
+
+node() {
+  echo "[node] Removing Node packages and installing NVM, PNPM"
+  sudo dnf remove -y nodejs nodejs-docs nodejs-full-i18n nodejs-npm
+
+  # Install NVM if not already installed in ~/.nvm
+  if [[ -d "$HOME/.nvm" ]]; then
+    echo "[node] NVM is already installed"
+  else
+    echo "[node] Installing NVM"
+    curl -o- "$NVM_INSTALL_URL" | bash
+  fi
+
+  # Load NVM
+  local nvm_dir="$HOME/.nvm"
+  [ -s "$nvm_dir/nvm.sh" ] && \. "$nvm_dir/nvm.sh"
+
+  echo "[node] Installing latest LTS version of Node via NVM"
+  nvm install --lts
+
+  echo "[node] Setting LTS as default Node version"
+  nvm use --lts
+  nvm alias default node
+
+  echo "[node] Installing PNPM globally via NPM"
+  npm install -g pnpm
+
+  echo "[node] Set up PNPM global packages directory"
+  pnpm setup
+}
+
+docker() {
+  echo "[docker] Install Docker Engine and configure user permissions"
+
+  sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+  sudo dnf in -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  sudo systemctl start docker
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+}
+
+snapper() {
+  echo "[snapper] Configure snapper for Btrfs snapshots"
+
+  # Create a snapper config for the root filesystem
+  if sudo snapper list | grep -q "^root[[:space:]]"; then
+    echo "[snapper] Snapper config for root already exists"
+  else
+    echo "[snapper] Creating snapper config for root"
+    sudo snapper -c root create-config /
+  fi
+
+  # Set up automatic snapshots via systemd timers
+  echo "[snapper] Enabling snapper-timeline.timer and snapper-cleanup.timer"
+  sudo systemctl enable --now snapper-timeline.timer
+  sudo systemctl enable --now snapper-cleanup.timer
+}
+
+aliases() {
+  echo "[aliases] Symlink aliases/.aliases to ~/.aliases"
+
+  local target="$HOME/.aliases"
+  local source="$ALIASES_DIR/.aliases"
+
+  if [[ -L "$target" ]]; then
+    if [[ "$(readlink "$target")" == "$source" ]]; then
+      echo "[aliases] Alias file is already correctly symlinked"
+      return
+    else
+      echo "[aliases] Alias file is a symlink to the wrong location. Removing."
+      rm "$target"
+    fi
+  elif [[ -e "$target" ]]; then
+    echo "[aliases] Alias file already exists and is not a symlink. Please remove or rename $target and re-run this step."
+    return
+  fi
+
+  ln -s "$source" "$target"
+  echo "[aliases] Symlinked $source to $target"
+}
+
+usage() {
+  cat <<EOF
+Usage: $0 [-s "step1,step2" | -s "name1,name2"] [-l]
+
+Options:
+  -s, --steps   Comma-separated list of steps to run. Accepts either descriptive names or (deprecated) numbers.
+                Steps run in the default order; duplicates are ignored.
+                Examples: -s "dnf_up" or -s "2,3"
+  -l, --list    List all available steps in order.
+  -h, --help    Show this help message.
+
+Available steps (in order):
+$(
+  i=1
+  for name in "${ALL_STEPS[@]}"; do
+    printf "  %2d) %s\n" "$i" "$name"
+    ((i++))
+  done
+)
+EOF
+}
+
+# Parse args
+STEPS_ARG=""
+LIST_ONLY=false
+while [[ $# > 0 ]]; do
+  case "$1" in
+    -s|--steps)
+      if [[ -n "${2-}" ]]; then
+        STEPS_ARG="$2"
+        shift 2
+        continue
+      else
+        echo "Error: --steps requires an argument" >&2
+        usage
+        exit 2
+      fi
+      ;;
+    -l|--list)
+      LIST_ONLY=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      usage
+      exit 2
+      ;;
+  esac
+done
+
+if [[ "$LIST_ONLY" == true ]]; then
+  usage
+  exit 0
+fi
+
+# Build ordered list of steps to run (names)
+declare -a RUN_STEPS=()
+if [[ -z "$STEPS_ARG" ]]; then
+  RUN_STEPS=("${ALL_STEPS[@]}")
+else
+  declare -A requested=()
+  IFS=',' read -ra raw <<< "$STEPS_ARG"
+  for token in "${raw[@]}"; do
+    # trim whitespace
+    step=$(echo "$token" | xargs)
+    if [[ -z "$step" ]]; then
+      continue
+    fi
+    if [[ "$step" =~ ^[0-9]+$ ]]; then
+      idx=$((10#$step))
+      if (( idx < 1 || idx > ${#ALL_STEPS[@]} )); then
+        echo "Invalid step number: $step" >&2
+        exit 2
+      fi
+      name="${ALL_STEPS[$((idx-1))]}"
+      requested["$name"]=1
+    else
+      # Validate name is in ALL_STEPS
+      valid=false
+      for name in "${ALL_STEPS[@]}"; do
+        if [[ "$name" == "$step" ]]; then
+          valid=true
+          requested["$name"]=1
+          break
+        fi
+      done
+      if [[ "$valid" != true ]]; then
+        echo "Invalid step name: $step" >&2
+        exit 2
+      fi
+    fi
+  done
+  # Maintain default order and dedupe
+  for name in "${ALL_STEPS[@]}"; do
+    if [[ -n "${requested[$name]+x}" ]]; then
+      RUN_STEPS+=("$name")
+    fi
+  done
+fi
+
+# Dispatch by name with validation
+for s in "${RUN_STEPS[@]}"; do
+  if declare -F "$s" > /dev/null; then
+    "$s"
+  else
+    echo "Unknown step function: $s" >&2
+    exit 3
+  fi
+done

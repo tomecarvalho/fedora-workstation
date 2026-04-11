@@ -1,0 +1,5 @@
+com.bitwarden.desktop
+com.obsproject.Studio
+com.stremio.Stremio
+org.signal.Signal
+org.telegram.desktop

@@ -1,0 +1,9 @@
+CURSOR_PATH="/usr/bin/cursor"
+FEDORA_WORKSTATION_PATH="~/fedora-workstation"
+SCRIPTS_PATH="$FEDORA_WORKSTATION_PATH/scripts"
+
+alias cb="wl-copy"
+alias cursor="$CURSOR_PATH --no-sandbox"
+alias docker-start="sudo systemctl start docker"
+alias docker-stop="sudo systemctl stop docker"
+alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"
