@@ -5,6 +5,8 @@ fastfetch
 fd-find
 fzf
 git
+gnome-extensions-app
+gnome-tweaks
 libreoffice-calc
 libreoffice-impress
 libreoffice-writer
