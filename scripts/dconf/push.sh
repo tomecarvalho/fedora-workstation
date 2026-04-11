@@ -47,65 +47,77 @@ CONFIG_FILE="gnome/dconf/config.dconf"
 mkdir -p "$(dirname "$CONFIG_FILE")"
 
 TMP_CONFIG="$(mktemp)"
-trap 'rm -f "$TMP_CONFIG"' EXIT
+FULL_DUMP="$(mktemp)"
+trap 'rm -f "$TMP_CONFIG" "$FULL_DUMP"' EXIT
 
-# Curated set of stable settings to keep under version control.
-DCONF_EXPORT_PATHS=(
-	"/org/gnome/desktop/background/"
-	"/org/gnome/desktop/interface/"
-	"/org/gnome/desktop/input-sources/"
-	"/org/gnome/desktop/peripherals/keyboard/"
-	"/org/gnome/desktop/peripherals/mouse/"
-	"/org/gnome/desktop/peripherals/touchpad/"
-	"/org/gnome/desktop/wm/keybindings/"
-	"/org/gnome/desktop/wm/preferences/"
-	"/org/gnome/mutter/"
-	"/org/gnome/mutter/keybindings/"
-	"/org/gnome/settings-daemon/plugins/media-keys/"
-	"/org/gnome/settings-daemon/plugins/color/"
-	"/org/gnome/settings-daemon/plugins/power/"
-	"/org/gnome/shell/keybindings/"
-	"/org/gnome/shell/extensions/appindicator/"
-	"/org/gnome/shell/extensions/copyous/"
-	"/org/gnome/shell/extensions/copyous/file-item/"
-	"/org/gnome/shell/extensions/copyous/link-item/"
-	"/org/gnome/shell/extensions/display-brightness-ddcutil/"
-	"/org/gnome/desktop/sound/"
-	"/org/gnome/login-screen/"
-	"/org/gnome/system/location/"
-	"/org/gtk/settings/color-chooser/"
-	"/org/gnome/desktop/search-providers/"
-	"/org/gnome/desktop/privacy/"
-	"/org/gnome/nautilus/preferences/"
-	"/org/gnome/nautilus/icon-view/"
-)
+# Dump full tree once, then filter to curated sections/keys while preserving
+# absolute section headers and spacing expected by `dconf load /`.
+dconf dump / > "$FULL_DUMP"
 
-for path in "${DCONF_EXPORT_PATHS[@]}"; do
-	dconf dump "$path" >> "$TMP_CONFIG"
-done
+KEEP_SECTIONS_CSV="org/gnome/desktop/background,org/gnome/desktop/interface,org/gnome/desktop/input-sources,org/gnome/desktop/peripherals/keyboard,org/gnome/desktop/peripherals/mouse,org/gnome/desktop/peripherals/touchpad,org/gnome/desktop/wm/keybindings,org/gnome/desktop/wm/preferences,org/gnome/mutter,org/gnome/mutter/keybindings,org/gnome/settings-daemon/plugins/media-keys,org/gnome/settings-daemon/plugins/color,org/gnome/settings-daemon/plugins/power,org/gnome/shell/keybindings,org/gnome/shell/extensions/appindicator,org/gnome/shell/extensions/copyous,org/gnome/shell/extensions/copyous/file-item,org/gnome/shell/extensions/copyous/link-item,org/gnome/shell/extensions/display-brightness-ddcutil,org/gnome/desktop/sound,org/gnome/login-screen,org/gnome/system/location,org/gtk/settings/color-chooser,org/gnome/desktop/search-providers,org/gnome/desktop/privacy,org/gnome/nautilus/preferences,org/gnome/nautilus/icon-view"
+SHELL_ROOT_KEYS_CSV="enabled-extensions,disabled-extensions,favorite-apps"
 
-# Keep selected root shell preferences while excluding transient keys.
-SHELL_ROOT_KEYS=(
-	"enabled-extensions"
-	"disabled-extensions"
-	"favorite-apps"
-)
+awk \
+	-v keep_sections_csv="$KEEP_SECTIONS_CSV" \
+	-v shell_root_keys_csv="$SHELL_ROOT_KEYS_CSV" '
+	BEGIN {
+		n = split(keep_sections_csv, keep_sections, ",")
+		for (i = 1; i <= n; i++) {
+			keep[keep_sections[i]] = 1
+		}
+		m = split(shell_root_keys_csv, shell_keys, ",")
+		for (i = 1; i <= m; i++) {
+			keep_shell_key[shell_keys[i]] = 1
+		}
+		printed_any_section = 0
+		current_section = ""
+	}
 
-WROTE_SHELL_SECTION=false
-for key in "${SHELL_ROOT_KEYS[@]}"; do
-	value="$(dconf read "/org/gnome/shell/${key}" 2>/dev/null || true)"
-	if [[ -n "$value" ]]; then
-		if [[ "$WROTE_SHELL_SECTION" == false ]]; then
-			echo "[org/gnome/shell]" >> "$TMP_CONFIG"
-			WROTE_SHELL_SECTION=true
-		fi
-		echo "${key}=${value}" >> "$TMP_CONFIG"
-	fi
-done
+	function start_section(section_name) {
+		if (printed_any_section) {
+			print ""
+		}
+		print "[" section_name "]"
+		printed_any_section = 1
+	}
 
-if [[ "$WROTE_SHELL_SECTION" == true ]]; then
-	echo >> "$TMP_CONFIG"
-fi
+	/^\[[^]]+\]$/ {
+		current_section = substr($0, 2, length($0) - 2)
+		section_started = 0
+		next
+	}
+
+	/^[[:space:]]*$/ {
+		next
+	}
+
+	{
+		if (current_section == "") {
+			next
+		}
+
+		if (keep[current_section]) {
+			if (!section_started) {
+				start_section(current_section)
+				section_started = 1
+			}
+			print $0
+			next
+		}
+
+		if (current_section == "org/gnome/shell") {
+			split($0, kv, "=")
+			key = kv[1]
+			if (keep_shell_key[key]) {
+				if (!section_started) {
+					start_section(current_section)
+					section_started = 1
+				}
+				print $0
+			}
+		}
+	}
+' "$FULL_DUMP" > "$TMP_CONFIG"
 
 [[ -s "$TMP_CONFIG" ]] || util_die "$ECHO_PREFIX" "Curated dconf export is empty; refusing to overwrite ${CONFIG_FILE}."
 mv "$TMP_CONFIG" "$CONFIG_FILE"
