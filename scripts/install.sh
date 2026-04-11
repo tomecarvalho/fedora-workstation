@@ -14,6 +14,7 @@ ALL_STEPS=(
   dnf_uninstall
   flatpak_install
   snap_install
+  gnome_extensions
   vscode
   node
   oh_my_zsh
@@ -31,6 +32,7 @@ ALIASES_DIR="$SCRIPT_DIR/../aliases"
 PKGS_DIR="$SCRIPT_DIR/../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
 REMOVE_PKGS_DIR="$PKGS_DIR/remove"
+EXTENSIONS_FILE="$SCRIPT_DIR/../gnome/extensions/extensions.txt"
 
 # shellcheck source=utils/packages.sh
 source "$SCRIPT_DIR/utils/packages.sh"
@@ -124,6 +126,51 @@ snap_install() {
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
+}
+
+gnome_extensions() {
+  echo "[gnome_extensions] Open GNOME extension URLs listed in gnome/extensions/extensions.txt"
+
+  if [[ ! -f "$EXTENSIONS_FILE" ]]; then
+    echo "[gnome_extensions] Missing $EXTENSIONS_FILE"
+    return 1
+  fi
+
+  local confirm=""
+  local -a urls=($(util_read_package_list "$EXTENSIONS_FILE"))
+
+  if [[ ${#urls[@]} -eq 0 ]]; then
+    echo "[gnome_extensions] No extension URLs to open"
+    return
+  fi
+
+  echo "[gnome_extensions] Found ${#urls[@]} extension URLs."
+  echo "[gnome_extensions] Enable/install each extension from the opened pages."
+
+  for url in "${urls[@]}"; do
+    echo "[gnome_extensions] ${url}"
+  done
+
+  if command -v xdg-open &> /dev/null; then
+    read -r -p "[gnome_extensions] Open all extension pages now? [y/n] (default: y): " confirm
+    confirm="${confirm:-y}"
+
+    case "$confirm" in
+      y|Y)
+        for url in "${urls[@]}"; do
+          xdg-open "$url" >/dev/null 2>&1 || echo "[gnome_extensions] Failed to open $url"
+        done
+        ;;
+      n|N)
+        echo "[gnome_extensions] Skipped opening browser pages."
+        ;;
+      *)
+        echo "[gnome_extensions] Invalid response '$confirm'. Skipping browser open."
+        ;;
+    esac
+  else
+    echo "[gnome_extensions] xdg-open not found. Open the links above manually."
+  fi
 }
 
 vscode() {
