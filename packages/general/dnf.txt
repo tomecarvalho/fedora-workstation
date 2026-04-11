@@ -1,6 +1,7 @@
 btrfs-assistant
 curl
 dconf-editor
+ddcutil
 discord
 fastfetch
 fd-find
