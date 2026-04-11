@@ -32,7 +32,8 @@ PKGS_DIR="$SCRIPT_DIR/../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
 REMOVE_PKGS_DIR="$PKGS_DIR/remove"
 
-source "$SCRIPT_DIR/utils.sh"
+# shellcheck source=utils/packages.sh
+source "$SCRIPT_DIR/utils/packages.sh"
 
 dnf_up() {
   echo "[dnf_up] Update packages"
@@ -52,7 +53,7 @@ copr() {
   echo "[copr] Enable COPR repositories"
   
   local copr_file="$GENERAL_PKGS_DIR/copr.txt"
-  local repos=($(read_package_list "$copr_file"))
+  local repos=($(util_read_package_list "$copr_file"))
 
   echo "[copr] Enabling ${#repos[@]} COPR repositories..."
 
@@ -66,7 +67,7 @@ dnf_install() {
   echo "[dnf_install] Install DNF packages"
   
   local pkg_file="$GENERAL_PKGS_DIR/dnf.txt"
-  local packages=($(read_package_list "$pkg_file"))
+  local packages=($(util_read_package_list "$pkg_file"))
 
   echo "[dnf_install] Installing ${#packages[@]} packages with dnf..."
   sudo dnf in -y "${packages[@]}"
@@ -76,7 +77,7 @@ dnf_uninstall() {
   echo "[dnf_uninstall] Uninstall unnecessary DNF packages"
 
   local pkg_file="$REMOVE_PKGS_DIR/dnf.txt"
-  local packages=($(read_package_list "$pkg_file"))
+  local packages=($(util_read_package_list "$pkg_file"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
     echo "[dnf_uninstall] No packages to uninstall"
@@ -91,7 +92,7 @@ flatpak_install() {
   echo "[flatpak_install] Install Flatpak packages"
 
   local pkg_file="$GENERAL_PKGS_DIR/flatpak.txt"
-  local packages=($(read_package_list "$pkg_file"))
+  local packages=($(util_read_package_list "$pkg_file"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
     echo "[flatpak_install] No packages to install"
@@ -108,7 +109,7 @@ snap_install() {
   echo "[snap_install] Install Snap packages"
 
   local pkg_file="$GENERAL_PKGS_DIR/snap.txt"
-  local packages=($(read_package_list "$pkg_file"))
+  local packages=($(util_read_package_list "$pkg_file"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
     echo "[snap_install] No packages to install"

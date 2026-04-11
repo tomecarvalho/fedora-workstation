@@ -1,9 +1,21 @@
 CURSOR_PATH="/usr/bin/cursor"
-FEDORA_WORKSTATION_PATH="~/fedora-workstation"
+
+FEDORA_WORKSTATION_PATH="$HOME/fedora-workstation"
 SCRIPTS_PATH="$FEDORA_WORKSTATION_PATH/scripts"
 
+# Copy to clipboard on Wayland.
 alias cb="wl-copy"
+
+# Enables the cursor command to open files or directories through the terminal.
 alias cursor="$CURSOR_PATH --no-sandbox"
+
+# Pull: update versioned dconf config; push: commit and push changes to tracked dconf config.
+alias dconf-pull="$SCRIPTS_PATH/dconf/pull.sh"
+alias dconf-push="$SCRIPTS_PATH/dconf/push.sh"
+
+# Start/stop the Docker service using systemd.
 alias docker-start="sudo systemctl start docker"
 alias docker-stop="sudo systemctl stop docker"
+
+# Update system packages, flatpaks, and snaps.
 alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"

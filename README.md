@@ -4,15 +4,7 @@ Configuration and post-install scripts for [Fedora Workstation](https://fedorapr
 
 ## Aliases
 
-Public aliases reside in [aliases/.aliases](aliases/.aliases) and are meant to be sourced from shell configs.
-
-| Alias          | Command                                                    | Description                                                          |
-| -------------- | ---------------------------------------------------------- | -------------------------------------------------------------------- |
-| `cb`           | `wl-copy`                                                  | Copy text to the clipboard from the terminal.                        |
-| `cursor`       | `/usr/bin/cursor --no-sandbox`                             | Allows launching Cursor to edit a file by running `cursor filename`. |
-| `docker-start` | `sudo systemctl start docker`                              | Start the Docker service.                                            |
-| `docker-stop`  | `sudo systemctl stop docker`                               | Stop the Docker service.                                             |
-| `update`       | `sudo dnf up -y && flatpak update -y && sudo snap refresh` | Update system packages, Flatpaks, and Snap packages.                 |
+Public aliases reside in [aliases/.aliases](aliases/.aliases) and are meant to be sourced from shell configs. The comments in the file explain the purpose of each alias.
 
 ## Packages
 
@@ -30,6 +22,7 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | [install](scripts/install.sh)                 | General installation script. Supports step parameter to run specific steps in isolation.       |
 | [install-work](scripts/install-work.sh)       | Work-specific installation script. Supports step parameter to run specific steps in isolation. |
+| [dconf](scripts/dconf/)                       | Backup and restore GNOME dconf settings.                                                       |
 | [nvidia-drivers](scripts/nvidia-drivers.sh)   | Helps set up NVIDIA GPU drivers.                                                               |
 | [secure-boot-key](scripts/secure-boot-key.sh) | Helps with Secure Boot key setup.                                                              |
-| [utils](scripts/utils.sh)                     | Contains utility functions used by other scripts.                                              |
+| [utils](scripts/utils/)                       | Modular shell helpers used by other scripts.                                                   |

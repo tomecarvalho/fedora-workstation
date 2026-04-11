@@ -16,13 +16,14 @@ ALL_STEPS=(
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PKGS_DIR="$SCRIPT_DIR/../packages/work"
 
-source "$SCRIPT_DIR/utils.sh"
+# shellcheck source=utils/packages.sh
+source "$SCRIPT_DIR/utils/packages.sh"
 
 copr() {
   echo "[copr] Enable COPR repositories"
   
   local copr_file="$PKGS_DIR/copr.txt"
-  local repos=($(read_package_list "$copr_file"))
+  local repos=($(util_read_package_list "$copr_file"))
 
   echo "[copr] Enabling ${#repos[@]} COPR repositories..."
 
@@ -35,7 +36,7 @@ dnf_install() {
   echo "[dnf_install] Install DNF packages"
   PKG_FILE="$PKGS_DIR/dnf.txt"
 
-  local packages=($(read_package_list "$PKG_FILE"))
+  local packages=($(util_read_package_list "$PKG_FILE"))
 
   echo "[dnf_install] Installing ${#packages[@]} packages with dnf..."
   sudo dnf in -y "${packages[@]}"
@@ -45,7 +46,7 @@ snap_install() {
   echo "[snap_install] Install Snap packages"
   PKG_FILE="$PKGS_DIR/snap.txt"
 
-  local packages=($(read_package_list "$PKG_FILE"))
+  local packages=($(util_read_package_list "$PKG_FILE"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
     echo "[snap_install] No packages to install"
