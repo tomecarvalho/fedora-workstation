@@ -8,6 +8,8 @@ fzf
 git
 gnome-extensions-app
 gnome-tweaks
+libgda 
+libgda-sqlite
 libreoffice-calc
 libreoffice-impress
 libreoffice-writer
