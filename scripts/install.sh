@@ -9,6 +9,7 @@ set -euo pipefail
 ALL_STEPS=(
   dnf_up
   rpm_fusion
+  repos
   copr
   dnf_install
   dnf_uninstall
@@ -46,10 +47,28 @@ dnf_up() {
 rpm_fusion() {
   echo "[rpm_fusion] Enable RPM Fusion Free and Nonfree"
 
-  local fedora_version="$(rpm -E %fedora)"
+  local fedora_version
+  fedora_version="$(rpm -E %fedora)"
 
   sudo dnf in -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$fedora_version.noarch.rpm
   sudo dnf in -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fedora_version.noarch.rpm
+}
+
+repos() {
+  echo "[repos] Enable additional repositories"
+
+  local repos_file="$GENERAL_PKGS_DIR/repos.txt"
+  local repos=($(util_read_package_list "$repos_file"))
+
+  if [[ ${#repos[@]} -eq 0 ]]; then
+    echo "[repos] No additional repositories to enable"
+    return
+  fi
+
+  echo "[repos] Enabling ${#repos[@]} additional repository(ies)..."
+  for repo in "${repos[@]}"; do
+    sudo dnf config-manager addrepo --from-repofile="$repo"
+  done
 }
 
 copr() {
@@ -58,7 +77,12 @@ copr() {
   local copr_file="$GENERAL_PKGS_DIR/copr.txt"
   local repos=($(util_read_package_list "$copr_file"))
 
-  echo "[copr] Enabling ${#repos[@]} COPR repositories..."
+  if [[ ${#repos[@]} -eq 0 ]]; then
+    echo "[copr] No COPR repositories to enable"
+    return
+  fi
+
+  echo "[copr] Enabling ${#repos[@]} COPR repository(ies)..."
 
   for repo in "${repos[@]}"; do
     sudo dnf copr enable -y "$repo"
@@ -72,7 +96,7 @@ dnf_install() {
   local pkg_file="$GENERAL_PKGS_DIR/dnf.txt"
   local packages=($(util_read_package_list "$pkg_file"))
 
-  echo "[dnf_install] Installing ${#packages[@]} packages with dnf..."
+  echo "[dnf_install] Installing ${#packages[@]} package(s) with dnf..."
   sudo dnf in -y "${packages[@]}"
 }
 
@@ -87,7 +111,7 @@ dnf_uninstall() {
     return
   fi
 
-  echo "[dnf_uninstall] Uninstalling ${#packages[@]} packages with dnf..."
+  echo "[dnf_uninstall] Uninstalling ${#packages[@]} package(s) with dnf..."
   sudo dnf rm -y "${packages[@]}"
 }
 
@@ -102,7 +126,7 @@ flatpak_install() {
     return
   fi
 
-  echo "[flatpak_install] Installing ${#packages[@]} packages with flatpak..."
+  echo "[flatpak_install] Installing ${#packages[@]} package(s) with flatpak..."
   for package in "${packages[@]}"; do
     flatpak install -y flathub "$package"
   done
@@ -123,7 +147,7 @@ snap_install() {
   sudo systemctl enable --now snapd.socket
   sudo ln -sf /var/lib/snapd/snap /snap 2>/dev/null || true
 
-  echo "[snap_install] Installing ${#packages[@]} packages with snap..."
+  echo "[snap_install] Installing ${#packages[@]} package(s) with snap..."
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
@@ -142,7 +166,7 @@ codecs() {
   sudo dnf in -y rpmfusion-free-release-tainted
   sudo dnf in -y libdvdcss
 
-  echo "[codecs] Install various firmwares from nonfree"
+  echo "[codecs] Install various firmwares from nonfree tainted"
   sudo dnf in -y rpmfusion-nonfree-release-tainted
   sudo dnf --repo=rpmfusion-nonfree-tainted in -y "*-firmware"
 }
