@@ -105,7 +105,7 @@ EOF
 # Parse args
 STEPS_ARG=""
 LIST_ONLY=false
-while [[ $# > 0 ]]; do
+while [[ $# -gt 0 ]]; do
   case "$1" in
     -s|--steps)
       if [[ -n "${2-}" ]]; then
