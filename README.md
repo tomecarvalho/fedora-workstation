@@ -18,11 +18,12 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 
 ## Scripts
 
-| Script                                        | Description                                                                                    |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| [install](scripts/install.sh)                 | General installation script. Supports step parameter to run specific steps in isolation.       |
-| [install-work](scripts/install-work.sh)       | Work-specific installation script. Supports step parameter to run specific steps in isolation. |
-| [dconf](scripts/dconf/)                       | Backup and restore GNOME dconf settings.                                                       |
-| [nvidia-drivers](scripts/nvidia-drivers.sh)   | Helps set up NVIDIA GPU drivers.                                                               |
-| [secure-boot-key](scripts/secure-boot-key.sh) | Helps with Secure Boot key setup.                                                              |
-| [utils](scripts/utils/)                       | Modular shell helpers used by other scripts.                                                   |
+| Script                                                       | Description                                                                                    |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| [install](scripts/install.sh)                                | General installation script. Supports step parameter to run specific steps in isolation.       |
+| [install-work](scripts/install-work.sh)                      | Work-specific installation script. Supports step parameter to run specific steps in isolation. |
+| [dconf](scripts/dconf/)                                      | Backup and restore GNOME dconf settings.                                                       |
+| [default-boot-windows](scripts/grub/default-boot-windows.sh) | Sets Windows Boot Manager as the default GRUB entry when detected.                             |
+| [nvidia-drivers](scripts/nvidia-drivers.sh)                  | Helps set up NVIDIA GPU drivers.                                                               |
+| [secure-boot-key](scripts/secure-boot-key.sh)                | Helps with Secure Boot key setup.                                                              |
+| [utils](scripts/utils/)                                      | Modular shell helpers used by other scripts.                                                   |
