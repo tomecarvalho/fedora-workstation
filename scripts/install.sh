@@ -14,6 +14,7 @@ ALL_STEPS=(
   dnf_uninstall
   flatpak_install
   snap_install
+  codecs
   gnome_extensions
   vscode
   node
@@ -126,6 +127,24 @@ snap_install() {
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
+}
+
+codecs() {
+  # https://rpmfusion.org/Howto/Multimedia
+  
+  echo "[codecs] Switch to full ffmpeg"
+  sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
+
+  echo "[codecs] Install additional codecs"
+  sudo dnf up -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+
+  echo "[codecs] Install packages for DVD"
+  sudo dnf in -y rpmfusion-free-release-tainted
+  sudo dnf in -y libdvdcss
+
+  echo "[codecs] Install various firmwares from nonfree"
+  sudo dnf in -y rpmfusion-nonfree-release-tainted
+  sudo dnf --repo=rpmfusion-nonfree-tainted in -y "*-firmware"
 }
 
 gnome_extensions() {
