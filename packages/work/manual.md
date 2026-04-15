@@ -1,0 +1,1 @@
+- [Slack RPM](https://slack.com/intl/en-gb/downloads/linux)
