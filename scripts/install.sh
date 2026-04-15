@@ -3,6 +3,8 @@
 OH_MY_ZSH_INSTALL_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
 NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh"
 
+ADWAITA_MONO_NERD_FONT_URL=https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/AdwaitaMono.zip
+
 set -euo pipefail
 
 # Default, ordered list of descriptive step names
@@ -25,7 +27,8 @@ ALL_STEPS=(
   docker
   snapper
   aliases
-  adwaita_mono_as_monospace
+  adwaita_mono_nerd_font
+  adwaita_mono_nerd_as_monospace
   adwaita_sans_as_sans_serif
 )
 
@@ -337,19 +340,47 @@ aliases() {
   echo "[aliases] Symlinked $source to $target"
 }
 
-adwaita_mono_as_monospace() {
-  echo "[adwaita_mono_as_monospace] Set Adwaita Mono as the monospace font system-wide"
+adwaita_mono_nerd_font() {
+  echo "[adwaita_mono_nerd_font] Install Adwaita Mono Nerd Font"
+
+  local font_name="AdwaitaMonoNerdFont"
+  local font_dir="/usr/local/share/fonts/$font_name"
+
+  if fc-list | grep -q "$font_name"; then
+    echo "$font_name is already installed"
+    return
+  fi
+
+  # Create the font directory, if needed
+  sudo mkdir -p "$font_dir"
+
+  # Download into a temporary ZIP file, unzip, and clean up the temp file
+  local tmp_zip
+  tmp_zip="$(mktemp --suffix=.zip)"
+  curl -L -o "$tmp_zip" "$ADWAITA_MONO_NERD_FONT_URL"
+  sudo unzip -o "$tmp_zip" -d "$font_dir"
+  rm "$tmp_zip"
+
+  # Update font cache
+  sudo fc-cache -fv
+
+  echo "[adwaita_mono_nerd_font] Installed $font_name to $font_dir"
+}
+
+
+adwaita_mono_nerd_as_monospace() {
+  echo "[adwaita_mono_nerd_as_monospace] Set Adwaita Mono Nerd Font as the monospace font system-wide"
 
   mkdir -p ~/.config/fontconfig/conf.d
 
-  cat > ~/.config/fontconfig/conf.d/99-monospace-adwaita.conf <<'EOF'
+  cat > ~/.config/fontconfig/conf.d/99-monospace-adwaita-nerd.conf <<'EOF'
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
   <alias>
     <family>monospace</family>
     <prefer>
-      <family>Adwaita Mono</family>
+      <family>Adwaita Mono Nerd Font</family>
     </prefer>
   </alias>
 </fontconfig>
@@ -357,7 +388,7 @@ EOF
 
   sudo fc-cache -fv
 
-  echo "[adwaita_mono_as_monospace] Set Adwaita Mono as the monospace font"
+  echo "[adwaita_mono_nerd_as_monospace] Set Adwaita Mono Nerd Font as the monospace font"
 }
 
 adwaita_sans_as_sans_serif() {
