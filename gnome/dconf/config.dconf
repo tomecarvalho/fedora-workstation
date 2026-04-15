@@ -1,9 +1,9 @@
 [org/gnome/desktop/background]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file:///usr/share/backgrounds/gnome/amber-l.jxl'
-picture-uri-dark='file:///usr/share/backgrounds/gnome/amber-d.jxl'
-primary-color='#ff7800'
+picture-uri='file:///usr/share/backgrounds/gnome/adwaita-l.jxl'
+picture-uri-dark='file:///usr/share/backgrounds/gnome/adwaita-d.jxl'
+primary-color='#3071AE'
 secondary-color='#000000'
 
 [org/gnome/desktop/input-sources]
@@ -17,6 +17,7 @@ accent-color='blue'
 clock-show-seconds=false
 clock-show-weekday=true
 color-scheme='prefer-dark'
+enable-animations=true
 gtk-theme='Adwaita-dark'
 show-battery-percentage=false
 text-scaling-factor=1.25
@@ -65,6 +66,7 @@ move-to-workspace-5=['<Shift><Super>t']
 move-to-workspace-last=@as []
 move-to-workspace-left=@as []
 move-to-workspace-right=@as []
+panel-run-dialog=['<Super>x']
 switch-applications=@as []
 switch-applications-backward=@as []
 switch-group=['<Alt>Escape']
@@ -81,6 +83,7 @@ switch-to-workspace-left=@as []
 switch-to-workspace-right=@as []
 switch-windows=['<Alt>Tab']
 switch-windows-backward=['<Shift><Alt>Tab']
+toggle-fullscreen=['<Super>f']
 toggle-maximized=['<Super>space']
 toggle-on-all-workspaces=['<Super>p']
 unmaximize=@as []
@@ -93,6 +96,7 @@ resize-with-right-button=true
 [org/gnome/login-screen]
 enable-fingerprint-authentication=true
 enable-smartcard-authentication=false
+enable-switchable-authentication=false
 
 [org/gnome/mutter]
 attach-modal-dialogs=false
@@ -119,17 +123,25 @@ night-light-temperature=uint32 3700
 
 [org/gnome/settings-daemon/plugins/media-keys]
 logout=['<Shift><Super>BackSpace']
+mic-mute=['<Control><Super>backslash']
+next=['<Shift><Super>bracketright']
+play=['<Shift><Super>backslash']
+previous=['<Shift><Super>bracketleft']
 reboot=['<Control><Alt><Super>BackSpace']
 screensaver=['<Super>BackSpace']
 shutdown=['<Alt><Super>BackSpace']
+volume-down=['<Super>bracketleft']
+volume-mute=['<Super>backslash']
+volume-up=['<Super>bracketright']
 
 [org/gnome/settings-daemon/plugins/power]
+idle-dim=true
 sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
-disabled-extensions=['background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'appindicatorsupport@rgcjonas.gmail.com', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst']
-favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack_slack.desktop', 'spotify_spotify.desktop']
+disabled-extensions=['window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com']
+enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'appindicatorsupport@rgcjonas.gmail.com', 'dynamic-music-pill@andbal']
+favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'slack.desktop', 'net.thunderbird.Thunderbird.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
 compact-mode-enabled=false
@@ -151,7 +163,6 @@ delete-item-shortcut=['<Control>d']
 disable-hljs-dialog=false
 dynamic-item-height=false
 header-controls-visibility='visible'
-history-time=0
 item-height=170
 item-width=250
 open-clipboard-dialog-behavior='toggle'
