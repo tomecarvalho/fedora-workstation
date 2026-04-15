@@ -5,6 +5,13 @@ NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh
 
 ADWAITA_MONO_NERD_FONT_URL=https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/AdwaitaMono.zip
 
+VIDEOS_DIR="$HOME/Videos"
+SHOWS_DIR="$VIDEOS_DIR/shows"
+FILMS_DIR="$VIDEOS_DIR/films"
+JELLYFIN_MEDIA_DIR="/mnt/media"
+JELLYFIN_SHOWS_DIR="$JELLYFIN_MEDIA_DIR/shows"
+JELLYFIN_FILMS_DIR="$JELLYFIN_MEDIA_DIR/films"
+
 set -euo pipefail
 
 # Default, ordered list of descriptive step names
@@ -30,6 +37,7 @@ ALL_STEPS=(
   adwaita_mono_nerd_font
   adwaita_mono_nerd_as_monospace
   adwaita_sans_as_sans_serif
+  jellyfin
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -412,6 +420,41 @@ EOF
   sudo fc-cache -fv
 
   echo "[adwaita_sans_as_sans_serif] Set Adwaita Sans as the sans-serif font"
+}
+
+jellyfin() {
+  echo "[jellyfin] Set up Jellyfin media server"
+
+  # Create user "shows" and "films" directories in Videos, if needed
+  mkdir -p "$SHOWS_DIR"
+  mkdir -p "$FILMS_DIR"
+
+  # Create directories for Jellyfin media
+  sudo mkdir -p "$JELLYFIN_SHOWS_DIR"
+  sudo mkdir -p "$JELLYFIN_FILMS_DIR"
+
+  # Ensure fstab entries exist (bind mounts)
+  FSTAB_LINE_SHOWS="$SHOWS_DIR $JELLYFIN_SHOWS_DIR none bind 0 0"
+  FSTAB_LINE_FILMS="$FILMS_DIR $JELLYFIN_FILMS_DIR none bind 0 0"
+
+  grep -qsF "$FSTAB_LINE_SHOWS" /etc/fstab || \
+    echo "$FSTAB_LINE_SHOWS" | sudo tee -a /etc/fstab
+
+  grep -qsF "$FSTAB_LINE_FILMS" /etc/fstab || \
+    echo "$FSTAB_LINE_FILMS" | sudo tee -a /etc/fstab
+
+  # Mount everything from fstab (applies immediately)
+  sudo mount -a
+
+  # Give jellyfin user read + traverse access via ACL (cleaner than chmod o+x)
+  if id jellyfin &>/dev/null; then
+    sudo setfacl -R -m u:jellyfin:rx "$SHOWS_DIR" "$FILMS_DIR"
+    sudo setfacl -m u:jellyfin:x "$VIDEOS_DIR" "$HOME"
+  else
+    echo "[jellyfin] Warning: jellyfin user not found, skipping ACL setup"
+  fi
+
+  echo "[jellyfin] Done"
 }
 
 usage() {

@@ -19,5 +19,9 @@ alias dconf-push='$SCRIPTS_PATH/dconf/push.sh'
 alias docker-start="sudo systemctl start docker"
 alias docker-stop="sudo systemctl stop docker"
 
+# Start/stop Jellyfin
+alias jellyfin-start="sudo systemctl start jellyfin"
+alias jellyfin-stop="sudo systemctl stop jellyfin"
+
 # Update system packages, flatpaks, and snaps.
 alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"

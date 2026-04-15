@@ -10,6 +10,7 @@ fzf
 git
 gnome-extensions-app
 gnome-tweaks
+jellyfin
 libgda 
 libgda-sqlite
 libreoffice-calc
