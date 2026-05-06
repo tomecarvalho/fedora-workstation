@@ -4,24 +4,39 @@ CURSOR_PATH="/usr/bin/cursor"
 
 FEDORA_WORKSTATION_PATH="$HOME/fedora-workstation"
 SCRIPTS_PATH="$FEDORA_WORKSTATION_PATH/scripts"
+BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 
 # Copy to clipboard on Wayland.
 alias cb="wl-copy"
 
-# Enables the cursor command to open files or directories through the terminal.
-alias cursor='$CURSOR_PATH --no-sandbox'
-
-# Pull: update versioned dconf config; push: commit and push changes to tracked dconf config.
-alias dconf-pull='$SCRIPTS_PATH/dconf/pull.sh'
-alias dconf-push='$SCRIPTS_PATH/dconf/push.sh'
-
-# Start/stop the Docker service using systemd.
-alias docker-start="sudo systemctl start docker"
-alias docker-stop="sudo systemctl stop docker"
-
-# Start/stop Jellyfin
-alias jellyfin-start="sudo systemctl start jellyfin"
-alias jellyfin-stop="sudo systemctl stop jellyfin"
-
 # Update system packages, flatpaks, and snaps.
 alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"
+
+# Pull: update versioned dconf config; push: commit and push changes to tracked dconf config.
+alias dconf_pull='$SCRIPTS_PATH/dconf/pull.sh'
+alias dconf_push='$SCRIPTS_PATH/dconf/push.sh'
+
+# Enables the cursor command to open files or directories through the terminal.
+cursor() {
+	"$CURSOR_PATH" --no-sandbox "$@"
+}
+
+# Start a systemd service.
+start() {
+  sudo systemctl start "$@"
+}
+
+# Stop a systemd service.
+stop() {
+  sudo systemctl stop "$@"
+}
+
+# Backup a project directory, excluding common package manager caches and dependencies, recursively.
+backup_projects() {
+	"$BACKUP_SCRIPTS_PATH/backup-projects.sh" "$@"
+}
+
+# Backup select directories and files from the home directory.
+backup_home() {
+	"$BACKUP_SCRIPTS_PATH/backup-home.sh"
+}
