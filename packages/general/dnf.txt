@@ -17,6 +17,7 @@ libreoffice-calc
 libreoffice-impress
 libreoffice-writer
 qbittorrent
+ripgrep
 snapd
 snapper
 thunderbird
