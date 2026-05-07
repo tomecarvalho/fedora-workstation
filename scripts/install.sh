@@ -108,7 +108,7 @@ dnf_install() {
   local packages=($(util_read_package_list "$pkg_file"))
 
   echo "[dnf_install] Installing ${#packages[@]} package(s) with dnf..."
-  sudo dnf in -y "${packages[@]}"
+  sudo dnf in -y --allowerasing "${packages[@]}"
 }
 
 dnf_uninstall() {

@@ -93,11 +93,6 @@ button-layout='appmenu:close'
 num-workspaces=5
 resize-with-right-button=true
 
-[org/gnome/login-screen]
-enable-fingerprint-authentication=true
-enable-smartcard-authentication=false
-enable-switchable-authentication=false
-
 [org/gnome/mutter]
 attach-modal-dialogs=false
 dynamic-workspaces=false
@@ -197,9 +192,6 @@ step-change-keyboard=2.0
 
 [org/gnome/shell/keybindings]
 toggle-message-tray=['<Super>b']
-
-[org/gnome/system/location]
-enabled=true
 
 [org/gtk/settings/color-chooser]
 custom-colors=[(0.14117647058823529, 0.57647058823529407, 0.93725490196078431, 1.0)]
