@@ -2,6 +2,7 @@
 
 OH_MY_ZSH_INSTALL_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
 NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh"
+US_PT_KEYBOARD_LAYOUT_GITHUB_SUFFIX="tomecarvalho/us-pt-keyboard-layout.git"
 
 ADWAITA_MONO_NERD_FONT_URL=https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/AdwaitaMono.zip
 
@@ -25,6 +26,7 @@ ALL_STEPS=(
   flatpak_install
   snap_install
   codecs
+  us_pt_keyboard_layout
   gnome_extensions
   vscode
   node
@@ -308,6 +310,35 @@ node() {
 
   echo "[node] Set up PNPM global packages directory"
   pnpm setup
+}
+
+us_pt_keyboard_layout() {
+  echo "[us_pt_keyboard_layout] Install the us-pt keyboard layout"
+
+  local layout_dir="$HOME/us-pt-keyboard-layout"
+
+  if [[ ! -d "$layout_dir" ]]; then
+    echo "[us_pt_keyboard_layout] Attempting to clone us-pt-keyboard-layout via SSH..."
+
+    if ! git clone "git@github.com:$US_PT_KEYBOARD_LAYOUT_GITHUB_SUFFIX" "$layout_dir"; then
+      echo "[us_pt_keyboard_layout] Failed to clone via SSH. Attempting via HTTPS..."
+
+      if ! git clone "https://github.com/$US_PT_KEYBOARD_LAYOUT_GITHUB_SUFFIX" "$layout_dir"; then
+        echo "[us_pt_keyboard_layout] Failed to clone us-pt-keyboard-layout via HTTPS."
+        return 1
+      fi
+    fi
+  fi
+
+  local install_script="$layout_dir/linux/install.sh"
+
+  if [[ -f "$install_script" ]]; then
+    echo "[us_pt_keyboard_layout] Running install script at $install_script"
+    sudo bash "$install_script"
+  else
+    echo "[us_pt_keyboard_layout] Install script not found at $install_script"
+    return 1
+  fi
 }
 
 docker() {
