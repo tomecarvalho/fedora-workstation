@@ -18,12 +18,14 @@ clock-show-seconds=false
 clock-show-weekday=true
 color-scheme='prefer-dark'
 enable-animations=true
-gtk-theme='Adwaita-dark'
+font-antialiasing='grayscale'
+gtk-theme='Adwaita'
+monospace-font-name='Monospace 11'
 show-battery-percentage=false
 toolkit-accessibility=false
 
 [org/gnome/desktop/peripherals/keyboard]
-numlock-state=true
+numlock-state=false
 
 [org/gnome/desktop/peripherals/mouse]
 natural-scroll=false
@@ -133,9 +135,9 @@ idle-dim=true
 sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
-disabled-extensions=['window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com']
+disabled-extensions=['window-list@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
 enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'appindicatorsupport@rgcjonas.gmail.com', 'dynamic-music-pill@andbal']
-favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'slack.desktop', 'net.thunderbird.Thunderbird.desktop', 'spotify_spotify.desktop']
+favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
 compact-mode-enabled=false
