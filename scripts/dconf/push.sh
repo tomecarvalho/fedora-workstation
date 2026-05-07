@@ -54,7 +54,7 @@ trap 'rm -f "$TMP_CONFIG" "$FULL_DUMP"' EXIT
 # absolute section headers and spacing expected by `dconf load /`.
 dconf dump / > "$FULL_DUMP"
 
-KEEP_SECTIONS_CSV="org/gnome/desktop/background,org/gnome/desktop/interface,org/gnome/desktop/input-sources,org/gnome/desktop/peripherals/keyboard,org/gnome/desktop/peripherals/mouse,org/gnome/desktop/peripherals/touchpad,org/gnome/desktop/wm/keybindings,org/gnome/desktop/wm/preferences,org/gnome/mutter,org/gnome/mutter/keybindings,org/gnome/settings-daemon/plugins/media-keys,org/gnome/settings-daemon/plugins/color,org/gnome/settings-daemon/plugins/power,org/gnome/shell/keybindings,org/gnome/shell/extensions/appindicator,org/gnome/shell/extensions/copyous,org/gnome/shell/extensions/copyous/file-item,org/gnome/shell/extensions/copyous/link-item,org/gnome/shell/extensions/display-brightness-ddcutil,org/gnome/desktop/sound,org/gtk/settings/color-chooser,org/gnome/desktop/search-providers,org/gnome/desktop/privacy,org/nautilus/preferences,org/gnome/nautilus/icon-view"
+KEEP_SECTIONS_CSV="org/gnome/desktop/background,org/gnome/desktop/interface,org/gnome/desktop/input-sources,org/gnome/desktop/peripherals/keyboard,org/gnome/desktop/peripherals/mouse,org/gnome/desktop/peripherals/touchpad,org/gnome/desktop/wm/keybindings,org/gnome/desktop/wm/preferences,org/gnome/mutter,org/gnome/mutter/keybindings,org/gnome/settings-daemon/plugins/media-keys,org/gnome/settings-daemon/plugins/color,org/gnome/settings-daemon/plugins/power,org/gnome/shell/keybindings,org/gnome/shell/extensions/appindicator,org/gnome/shell/extensions/copyous,org/gnome/shell/extensions/copyous/file-item,org/gnome/shell/extensions/copyous/link-item,org/gnome/shell/extensions/display-brightness-ddcutil,org/gnome/desktop/sound,org/gtk/settings/color-chooser,org/gnome/desktop/search-providers,org/gnome/desktop/privacy,org/gnome/nautilus/preferences,org/gnome/nautilus/icon-view"
 SHELL_ROOT_KEYS_CSV="enabled-extensions,disabled-extensions,favorite-apps"
 
 awk \
@@ -97,6 +97,9 @@ awk \
 		}
 
 		if (keep[current_section]) {
+			if (current_section == "org/gnome/desktop/interface" && $0 ~ /^text-scaling-factor=/) {
+				next
+			}
 			if (current_section == "org/gnome/settings-daemon/plugins/color" && $0 ~ /^night-light-last-coordinates=/) {
 				next
 			}
