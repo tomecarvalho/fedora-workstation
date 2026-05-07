@@ -158,6 +158,18 @@ snap_install() {
   sudo systemctl enable --now snapd.socket
   sudo ln -sf /var/lib/snapd/snap /snap 2>/dev/null || true
 
+  echo "[snap_install] Waiting for snapd socket to become ready..."
+  local retries=50
+  until systemctl is-active --quiet snapd.socket; do
+    if [[ $retries -le 0 ]]; then
+      echo "[snap_install] snapd.socket did not become ready in time" >&2
+      return 1
+    fi
+
+    sleep 0.1
+    ((retries--))
+  done
+
   echo "[snap_install] Installing ${#packages[@]} package(s) with snap..."
   for package in "${packages[@]}"; do
     sudo snap install "$package"
