@@ -12,9 +12,15 @@ alias cb="wl-copy"
 # Update system packages, flatpaks, and snaps.
 alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"
 
-# Pull: update versioned dconf config; push: commit and push changes to tracked dconf config.
-alias dconf_pull='$SCRIPTS_PATH/dconf/pull.sh'
-alias dconf_push='$SCRIPTS_PATH/dconf/push.sh'
+# Update versioned dconf config.
+dconf_pull() {
+  "$SCRIPTS_PATH/dconf/pull.sh"
+}
+
+# Commit and push changes to tracked dconf config.
+dconf_push() {
+  "$SCRIPTS_PATH/dconf/push.sh"
+}
 
 # Enables the cursor command to open files or directories through the terminal.
 cursor() {
