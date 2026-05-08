@@ -1,3 +1,4 @@
+adw-gtk3-theme
 brave-browser
 btrfs-assistant
 curl
