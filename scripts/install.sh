@@ -26,6 +26,7 @@ ALL_STEPS=(
   flatpak_install
   snap_install
   codecs
+  ca_bundle_symlink
   us_pt_keyboard_layout
   gnome_extensions
   vscode
@@ -194,6 +195,32 @@ codecs() {
   echo "[codecs] Install various firmwares from nonfree tainted"
   sudo dnf in -y rpmfusion-nonfree-release-tainted
   sudo dnf --repo=rpmfusion-nonfree-tainted in -y "*-firmware"
+}
+
+# Symlink the system CA bundle to the location expected by some tools, if not already set up.
+ca_bundle_symlink() {
+  local prefix="[ca_bundle_symlink]"
+
+  echo "$prefix Set up /etc/pki/tls/certs/ca-bundle.crt symlink"
+
+  local target="/etc/pki/tls/certs/ca-bundle.crt"
+  local source="/etc/ssl/certs/ca-bundle.crt"
+
+  # If target already exists, exit.
+  if [[ -e "$target" ]]; then
+    echo "$prefix $target already exists, skipping symlink setup"
+    return
+  fi
+
+  # If source doesn't exist, warn and exit.
+  if [[ ! -e "$source" ]]; then
+    echo "$prefix Warning: source CA bundle not found at $source. Cannot create symlink at $target." >&2
+    return 1
+  fi
+
+  sudo ln -s "$source" "$target"
+
+  echo "$prefix Created symlink from $source to $target"
 }
 
 gnome_extensions() {
