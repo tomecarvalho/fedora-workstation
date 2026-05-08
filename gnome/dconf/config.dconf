@@ -22,7 +22,7 @@ font-antialiasing='grayscale'
 gtk-theme='Adwaita'
 monospace-font-name='Monospace 11'
 show-battery-percentage=false
-toolkit-accessibility=false
+toolkit-accessibility=true
 
 [org/gnome/desktop/peripherals/keyboard]
 numlock-state=false
@@ -90,12 +90,14 @@ toggle-on-all-workspaces=['<Super>p']
 unmaximize=@as []
 
 [org/gnome/desktop/wm/preferences]
+action-middle-click-titlebar='lower'
 button-layout='appmenu:close'
 num-workspaces=5
 resize-with-right-button=true
 
 [org/gnome/mutter]
 attach-modal-dialogs=false
+center-new-windows=true
 dynamic-workspaces=false
 workspaces-only-on-primary=false
 
@@ -124,9 +126,7 @@ next=['<Shift><Super>bracketright']
 play=['<Shift><Super>backslash']
 previous=['<Shift><Super>bracketleft']
 reboot=['<Control><Alt><Super>BackSpace']
-screenshot=['<Shift>Print', '<Shift><Super>s']
-screenshot-clip=['Print', '<Control><Super>s']
-screenshot-window=['<Alt>Print', '<Alt><Super>s']
+screenreader=@as []
 screensaver=['<Super>BackSpace']
 shutdown=['<Alt><Super>BackSpace']
 volume-down=['<Super>bracketleft']
@@ -149,6 +149,8 @@ icon-contrast=0.0
 icon-opacity=240
 icon-saturation=0.0
 icon-size=24
+legacy-tray-enabled=true
+tray-pos='right'
 
 [org/gnome/shell/extensions/copyous]
 auto-hide-search=false
@@ -195,6 +197,9 @@ show-value-label=false
 step-change-keyboard=2.0
 
 [org/gnome/shell/keybindings]
+screenshot=['<Shift><Super>s', '<Shift>Print']
+screenshot-window=['<Alt><Super>s', '<Alt>Print']
+show-screenshot-ui=['<Control><Super>s', 'Print']
 toggle-message-tray=['<Super>b']
 
 [org/gtk/settings/color-chooser]
