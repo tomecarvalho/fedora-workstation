@@ -1,6 +1,7 @@
 adw-gtk3-theme
 brave-browser
 btrfs-assistant
+celluloid
 curl
 dconf-editor
 ddcutil
