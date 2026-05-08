@@ -19,7 +19,7 @@ clock-show-weekday=true
 color-scheme='prefer-dark'
 enable-animations=true
 font-antialiasing='grayscale'
-gtk-theme='Adwaita'
+gtk-theme='adw-gtk3-dark'
 monospace-font-name='Monospace 11'
 show-battery-percentage=false
 toolkit-accessibility=true
@@ -128,6 +128,9 @@ previous=['<Shift><Super>bracketleft']
 reboot=['<Control><Alt><Super>BackSpace']
 screenreader=@as []
 screensaver=['<Super>BackSpace']
+screenshot=['<Shift>Print', '<Shift><Super>s']
+screenshot-clip=['Print', '<Control><Super>s']
+screenshot-window=['<Alt>Print', '<Alt><Super>s']
 shutdown=['<Alt><Super>BackSpace']
 volume-down=['<Super>bracketleft']
 volume-mute=['<Super>backslash']
@@ -139,7 +142,7 @@ sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
 disabled-extensions=['window-list@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'appindicatorsupport@rgcjonas.gmail.com', 'dynamic-music-pill@andbal']
+enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'appindicatorsupport@rgcjonas.gmail.com', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com']
 favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
