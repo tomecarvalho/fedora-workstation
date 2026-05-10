@@ -12,6 +12,9 @@ alias cb="wl-copy"
 # Update system packages, flatpaks, and snaps.
 alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"
 
+# Start a nested GNOME Shell instance for extension development
+alias gsdw="dbus-run-session gnome-shell --devkit --wayland"
+
 # Update versioned dconf config.
 dconf_pull() {
   "$SCRIPTS_PATH/dconf/pull.sh"

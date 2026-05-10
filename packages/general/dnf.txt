@@ -18,6 +18,8 @@ libgda-sqlite
 libreoffice-calc
 libreoffice-impress
 libreoffice-writer
+mutter-devel
+mutter-devkit
 qbittorrent
 ripgrep
 snapd
