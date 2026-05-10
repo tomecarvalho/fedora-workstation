@@ -20,6 +20,7 @@ libreoffice-impress
 libreoffice-writer
 mutter-devel
 mutter-devkit
+python3-virtualenv
 qbittorrent
 ripgrep
 snapd
