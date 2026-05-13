@@ -18,6 +18,7 @@ clock-show-seconds=false
 clock-show-weekday=true
 color-scheme='prefer-dark'
 enable-animations=true
+enable-hot-corners=true
 font-antialiasing='grayscale'
 gtk-theme='adw-gtk3-dark'
 monospace-font-name='Monospace 11'
@@ -86,7 +87,7 @@ switch-windows=['<Alt>Tab']
 switch-windows-backward=['<Shift><Alt>Tab']
 toggle-fullscreen=['<Super>f']
 toggle-maximized=['<Super>space']
-toggle-on-all-workspaces=['<Super>p']
+toggle-on-all-workspaces=['<Super>o']
 unmaximize=@as []
 
 [org/gnome/desktop/wm/preferences]
@@ -99,6 +100,7 @@ resize-with-right-button=true
 attach-modal-dialogs=false
 center-new-windows=true
 dynamic-workspaces=false
+edge-tiling=true
 workspaces-only-on-primary=false
 
 [org/gnome/mutter/keybindings]
@@ -109,7 +111,7 @@ toggle-tiled-right=['<Shift><Super>l', '<Shift><Super>Right']
 default-zoom-level='small-plus'
 
 [org/gnome/nautilus/preferences]
-default-folder-viewer='icon-view'
+default-folder-viewer='list-view'
 migrated-gtk-settings=true
 
 [org/gnome/settings-daemon/plugins/color]
@@ -141,17 +143,17 @@ idle-dim=true
 sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
-disabled-extensions=['window-list@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'appindicatorsupport@rgcjonas.gmail.com', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com']
+disabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'tilingshell@ferrarodomenico.com', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
+enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'centermouseshortcut@tomecarvalho.github.io', 'centermouseshortcuts@tomecarvalho.github.io', 'highlight-focus@pimsnel.com']
 favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
-compact-mode-enabled=false
+compact-mode-enabled=true
 icon-brightness=0.0
 icon-contrast=0.0
 icon-opacity=240
 icon-saturation=0.0
-icon-size=24
+icon-size=20
 legacy-tray-enabled=true
 tray-pos='right'
 
@@ -167,6 +169,7 @@ delete-item-shortcut=['<Control>d']
 disable-hljs-dialog=false
 dynamic-item-height=false
 header-controls-visibility='visible'
+history-length=20
 item-height=170
 item-width=250
 open-clipboard-dialog-behavior='toggle'
