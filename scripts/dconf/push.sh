@@ -103,6 +103,9 @@ awk \
 			if (current_section == "org/gnome/settings-daemon/plugins/color" && $0 ~ /^night-light-last-coordinates=/) {
 				next
 			}
+			if (current_section == "org/gnome/nautilus/preferences" && $0 ~ /^default-folder-viewer=/) {
+				next
+			}
 			if (!section_started) {
 				start_section(current_section)
 				section_started = 1
