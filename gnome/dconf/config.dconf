@@ -143,7 +143,7 @@ sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
 disabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'tilingshell@ferrarodomenico.com', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'AlphabeticalAppGrid@stuarthayhurst', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'centermouseshortcut@tomecarvalho.github.io', 'centermouseshortcuts@tomecarvalho.github.io', 'highlight-focus@pimsnel.com']
+enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'AlphabeticalAppGrid@stuarthayhurst', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'centermouseshortcut@tomecarvalho.github.io', 'centermouseshortcuts@tomecarvalho.github.io', 'highlight-focus@pimsnel.com', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com']
 favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
@@ -174,7 +174,7 @@ item-width=250
 open-clipboard-dialog-behavior='toggle'
 open-clipboard-dialog-shortcut=['<Super>v']
 send-notification=false
-show-at-cursor=false
+show-at-cursor=true
 show-at-pointer=false
 show-content-indicator=false
 show-header=true
@@ -197,6 +197,7 @@ hide-system-indicator=true
 increase-brightness-shortcut=['<Control>XF86MonBrightnessUp']
 position-system-menu=3.0
 show-display-name=true
+show-internal-slider=false
 show-osd=false
 show-value-label=false
 step-change-keyboard=2.0
