@@ -138,7 +138,8 @@ volume-mute=['<Super>backslash']
 volume-up=['<Super>bracketright']
 
 [org/gnome/settings-daemon/plugins/power]
-idle-dim=true
+ambient-enabled=false
+idle-dim=false
 sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
