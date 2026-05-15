@@ -158,7 +158,7 @@ tray-pos='right'
 
 [org/gnome/shell/extensions/copyous]
 auto-hide-search=false
-clipboard-history='keep-all'
+clipboard-history='keep-pinned-and-tagged'
 clipboard-orientation='horizontal'
 clipboard-position-horizontal='fill'
 clipboard-position-vertical='top'
