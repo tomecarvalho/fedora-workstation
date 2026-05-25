@@ -41,6 +41,7 @@ ALL_STEPS=(
   adwaita_mono_nerd_as_monospace
   adwaita_sans_as_sans_serif
   jellyfin
+  stow_apply
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -48,6 +49,7 @@ ALIASES_DIR="$SCRIPT_DIR/../aliases"
 PKGS_DIR="$SCRIPT_DIR/../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
 REMOVE_PKGS_DIR="$PKGS_DIR/remove"
+STOW_DIR="$SCRIPT_DIR/../stow"
 EXTENSIONS_FILE="$SCRIPT_DIR/../gnome/extensions/extensions.txt"
 
 # shellcheck source=utils/packages.sh
@@ -532,6 +534,50 @@ jellyfin() {
   fi
 
   echo "[jellyfin] Done"
+}
+
+stow_apply() {
+  local prefix="[stow_apply]"
+
+  echo "$prefix Symlink stow-managed dotfiles to home directory"
+
+  local stow_bin
+  stow_bin="$(type -P stow || true)"
+
+  if [[ -z "$stow_bin" ]]; then
+    echo "$prefix GNU Stow is not installed. Install it first and re-run this step." >&2
+    return
+  fi
+
+  if [[ ! -d "$STOW_DIR" ]]; then
+    echo "$prefix Stow directory not found at $STOW_DIR" >&2
+    return 1
+  fi
+
+  local -a packages=()
+  local package
+
+  while IFS= read -r package; do
+    [[ -n "$package" ]] && packages+=("$package")
+  done < <(find "$STOW_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
+
+  if [[ ${#packages[@]} -eq 0 ]]; then
+    echo "$prefix No stow packages found in $STOW_DIR"
+    return
+  fi
+
+  echo "$prefix Stowing ${#packages[@]} package(s) from $STOW_DIR into $HOME"
+
+  for package in "${packages[@]}"; do
+    local package_target="$HOME"
+
+    if [[ "$package" == .* ]]; then
+      package_target="$HOME/$package"
+    fi
+
+    echo "$prefix Stowing package: $package"
+    "$stow_bin" --restow --dir "$STOW_DIR" --target "$package_target" "$package"
+  done
 }
 
 usage() {

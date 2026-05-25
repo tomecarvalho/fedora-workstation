@@ -25,6 +25,7 @@ qbittorrent
 ripgrep
 snapd
 snapper
+stow
 thunderbird
 webapp-manager
 zoxide

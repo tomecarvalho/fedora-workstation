@@ -1,0 +1,12 @@
+# Disable the built-in gcloud module, because it's annoyingly displayed everywhere.
+[gcloud]
+disabled = true
+
+# Custom gcloud module that only activates when there are app.*.yaml files in the current directory.
+[custom.gcloud]
+command = "gcloud config get-value account 2>/dev/null"
+when = 'ls app.*.yaml 2>/dev/null | grep -q .'
+symbol = "☁️  "
+format = "on [$symbol$output]($style) "
+style = "bold blue"
+shell = ["bash", "--noprofile", "--norc"]
