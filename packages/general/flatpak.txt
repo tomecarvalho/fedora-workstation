@@ -1,5 +1,6 @@
 com.bitwarden.desktop
 com.obsproject.Studio
 com.stremio.Stremio
+org.localsend.localsend_app
 org.signal.Signal
 org.telegram.desktop
