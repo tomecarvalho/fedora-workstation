@@ -1,5 +1,5 @@
 adw-gtk3-theme
-brave-browser
+brave-origin
 btrfs-assistant
 celluloid
 curl
