@@ -1,1 +1,2 @@
 - [Slack RPM](https://slack.com/intl/en-gb/downloads/linux)
+- [Zoom RPM](https://zoom.us/download)
