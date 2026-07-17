@@ -20,6 +20,7 @@ color-scheme='prefer-dark'
 enable-animations=true
 enable-hot-corners=true
 font-antialiasing='grayscale'
+gtk-enable-primary-paste=true
 gtk-theme='adw-gtk3-dark'
 monospace-font-name='Monospace 11'
 show-battery-percentage=false
@@ -143,8 +144,8 @@ idle-dim=false
 sleep-inactive-ac-type='nothing'
 
 [org/gnome/shell]
-disabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'tilingshell@ferrarodomenico.com', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['mouse-follows-focus@crisidev.org', 'focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'AlphabeticalAppGrid@stuarthayhurst', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com', 'centermouseshortcut@tomecarvalho.github.io', 'centermouseshortcuts@tomecarvalho.github.io', 'highlight-focus@pimsnel.com', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com']
+disabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'just-perfection-desktop@just-perfection', 'background-logo@fedorahosted.org', 'tilingshell@ferrarodomenico.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'appindicatorsupport@rgcjonas.gmail.com']
+enabled-extensions=['focus-changer@heartmire', 'gsconnect@andyholmes.github.io', 'AlphabeticalAppGrid@stuarthayhurst', 'dynamic-music-pill@andbal', 'legacyschemeautoswitcher@joshimukul29.gmail.com', 'centermouseshortcut@tomecarvalho.github.io', 'highlight-focus@pimsnel.com', 'copyous@boerdereinar.dev', 'display-brightness-ddcutil@themightydeity.github.com', 'mouse-follows-focus@crisidev.org', 'centermouseshortcuts@tomecarvalho.github.io']
 favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Ptyxis.desktop', 'code.desktop', 'cursor.desktop', 'net.thunderbird.Thunderbird.desktop', 'slack.desktop', 'spotify_spotify.desktop']
 
 [org/gnome/shell/extensions/appindicator]
@@ -197,6 +198,7 @@ decrease-brightness-shortcut=['<Control>XF86MonBrightnessDown']
 hide-system-indicator=true
 increase-brightness-shortcut=['<Control>XF86MonBrightnessUp']
 position-system-menu=3.0
+show-all-slider=false
 show-display-name=true
 show-internal-slider=false
 show-osd=false
@@ -211,4 +213,4 @@ toggle-message-tray=['<Super>b']
 
 [org/gtk/settings/color-chooser]
 custom-colors=[(0.14117647058823529, 0.57647058823529407, 0.93725490196078431, 1.0)]
-selected-color=(true, 0.14117647058823529, 0.57647058823529407, 0.93725490196078431, 1.0)
+selected-color=(true, 1.0, 1.0, 1.0, 1.0)
