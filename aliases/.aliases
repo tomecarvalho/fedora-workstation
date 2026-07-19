@@ -49,3 +49,8 @@ backup_projects() {
 backup_home() {
 	"$BACKUP_SCRIPTS_PATH/backup-home.sh"
 }
+
+# Sync home backup paths (and optional projects) to another local-network machine.
+sync_local() {
+	"$BACKUP_SCRIPTS_PATH/sync-local.sh" "$@"
+}

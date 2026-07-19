@@ -24,6 +24,7 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [install-work](scripts/install-work.sh)                      | Work-specific installation script. Supports step parameter to run specific steps in isolation. |
 | [backup-home](scripts/backup/backup-home.sh)                 | Backup select directories and files from the home directory.                                   |
 | [backup-projects](scripts/backup/backup-projects.sh)         | Backup a project directory, excluding package manager caches and dependencies.                 |
+| [sync-local](scripts/backup/sync-local.sh)                   | Sync the same home/project paths to another local-network machine over SSH (sender wins).      |
 | [dconf-pull](scripts/dconf/pull.sh)                          | Export current GNOME dconf settings to repository.                                             |
 | [dconf-push](scripts/dconf/push.sh)                          | Restore GNOME dconf settings from repository.                                                  |
 | [default-boot-windows](scripts/grub/default-boot-windows.sh) | Sets Windows Boot Manager as the default GRUB entry when detected.                             |
