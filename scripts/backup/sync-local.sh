@@ -71,10 +71,15 @@ Options:
   -d, --delete         Remove files on the remote that are gone locally
   -h, --help           Show this help
 
+Auth:
+  Works with SSH keys or a password. A multiplexed SSH connection is used so a
+  password is only entered once per run. Prefer the .local hostname on LAN,
+  e.g. laptop.local
+
 Examples:
-  $(basename "$0") laptop
+  $(basename "$0") laptop.local
   $(basename "$0") user@192.168.1.50 -p ~/projects/app
-  $(basename "$0") --dry-run laptop -p ~/Code/foo -p ~/Code/bar
+  $(basename "$0") --dry-run laptop.local -p ~/Code/foo -p ~/Code/bar
 EOF
 }
 
@@ -132,9 +137,29 @@ if [[ "$DELETE" -eq 1 ]]; then
 	RSYNC_OPTS+=(--delete)
 fi
 
-echo "$ECHO_PREFIX Checking SSH connectivity to ${REMOTE}..."
-if ! ssh -o BatchMode=yes -o ConnectTimeout=5 "$REMOTE" "true" 2>/dev/null; then
-	util_die "$ECHO_PREFIX" "Cannot reach '${REMOTE}' over SSH (is the host up and key-based auth set up?)."
+# Multiplex SSH so password auth only prompts once (keys still work if you
+# set IdentityFile for the host). IdentitiesOnly avoids "Too many
+# authentication failures" from offering every key in ~/.ssh / the agent.
+mkdir -p "${HOME}/.ssh"
+CONTROL_PATH="${HOME}/.ssh/cm-sync-local-%C"
+SSH_OPTS=(
+	-o "ControlMaster=auto"
+	-o "ControlPath=${CONTROL_PATH}"
+	-o "ControlPersist=60"
+	-o "ConnectTimeout=10"
+	-o "IdentitiesOnly=yes"
+	-o "PreferredAuthentications=password,keyboard-interactive,publickey"
+)
+RSYNC_RSH="ssh ${SSH_OPTS[*]}"
+
+cleanup_ssh() {
+	ssh -O exit "${SSH_OPTS[@]}" "$REMOTE" 2>/dev/null || true
+}
+trap cleanup_ssh EXIT
+
+echo "$ECHO_PREFIX Connecting to ${REMOTE} (password once if needed)..."
+if ! ssh "${SSH_OPTS[@]}" "$REMOTE" "true"; then
+	util_die "$ECHO_PREFIX" "Cannot reach '${REMOTE}' over SSH. Use the .local hostname (e.g. host.local) or the LAN IP, and confirm Remote Login is enabled."
 fi
 
 remote_home_path() {
@@ -144,6 +169,12 @@ remote_home_path() {
 		util_die "$ECHO_PREFIX" "Path is not under \$HOME: $abs_path"
 	fi
 	printf '%s\n' "$rel"
+}
+
+# Ensure a path relative to the remote home exists (rsync will not create parents).
+remote_mkdir() {
+	local dest_rel="$1"
+	ssh "${SSH_OPTS[@]}" "$REMOTE" "mkdir -p -- $(printf '%q' "$dest_rel")"
 }
 
 sync_dir() {
@@ -156,22 +187,28 @@ sync_dir() {
 		return 0
 	fi
 
+	remote_mkdir "$dest_rel"
 	echo "$ECHO_PREFIX Syncing directory: $src -> ${REMOTE}:${dest_rel}/"
-	rsync "${RSYNC_OPTS[@]}" -e ssh "${src}/" "${REMOTE}:${dest_rel}/"
+	rsync "${RSYNC_OPTS[@]}" -e "$RSYNC_RSH" "${src}/" "${REMOTE}:${dest_rel}/"
 }
 
 sync_file() {
 	local src="$1"
 	local dest_rel
+	local dest_dir
 	dest_rel="$(remote_home_path "$src")"
+	dest_dir="$(dirname -- "$dest_rel")"
 
 	if [[ ! -f "$src" ]]; then
 		echo "$ECHO_PREFIX Skipping missing file: $src"
 		return 0
 	fi
 
+	if [[ "$dest_dir" != "." ]]; then
+		remote_mkdir "$dest_dir"
+	fi
 	echo "$ECHO_PREFIX Syncing file: $src -> ${REMOTE}:${dest_rel}"
-	rsync "${RSYNC_OPTS[@]}" -e ssh "$src" "${REMOTE}:${dest_rel}"
+	rsync "${RSYNC_OPTS[@]}" -e "$RSYNC_RSH" "$src" "${REMOTE}:${dest_rel}"
 }
 
 sync_project() {
@@ -192,8 +229,9 @@ sync_project() {
 		exclude_args+=(--exclude="$pattern")
 	done
 
+	remote_mkdir "$dest_rel"
 	echo "$ECHO_PREFIX Syncing project: $src -> ${REMOTE}:${dest_rel}/"
-	rsync "${RSYNC_OPTS[@]}" "${exclude_args[@]}" -e ssh "${src}/" "${REMOTE}:${dest_rel}/"
+	rsync "${RSYNC_OPTS[@]}" "${exclude_args[@]}" -e "$RSYNC_RSH" "${src}/" "${REMOTE}:${dest_rel}/"
 }
 
 if [[ "$DRY_RUN" -eq 1 ]]; then
