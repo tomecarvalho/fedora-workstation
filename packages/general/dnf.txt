@@ -8,6 +8,7 @@ ddcutil
 discord
 fastfetch
 fd-find
+fuse-libs
 fzf
 gcolor3
 git
@@ -24,6 +25,7 @@ mutter-devkit
 python3-virtualenv
 qbittorrent
 ripgrep
+seahorse
 snapd
 snapper
 stow

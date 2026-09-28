@@ -38,8 +38,7 @@ ALL_STEPS=(
   snapper
   aliases
   adwaita_mono_nerd_font
-  adwaita_mono_nerd_as_monospace
-  adwaita_sans_as_sans_serif
+  set_fonts_adwaita
   jellyfin
   stow_apply
 )
@@ -54,6 +53,8 @@ EXTENSIONS_FILE="$SCRIPT_DIR/../gnome/extensions/extensions.txt"
 
 # shellcheck source=utils/packages.sh
 source "$SCRIPT_DIR/utils/packages.sh"
+# shellcheck source=utils/core.sh
+source "$SCRIPT_DIR/utils/core.sh"
 
 dnf_up() {
   echo "[dnf_up] Update packages"
@@ -435,64 +436,54 @@ adwaita_mono_nerd_font() {
   local font_name="AdwaitaMonoNerdFont"
   local font_dir="/usr/local/share/fonts/$font_name"
 
-  if fc-list | grep -q "$font_name"; then
-    echo "$font_name is already installed"
-    return
-  fi
-
-  # Create the font directory, if needed
-  sudo mkdir -p "$font_dir"
-
-  # Download into a temporary ZIP file, unzip, and clean up the temp file
-  local tmp_zip
-  tmp_zip="$(mktemp --suffix=.zip)"
-  curl -L -o "$tmp_zip" "$ADWAITA_MONO_NERD_FONT_URL"
-  sudo unzip -o "$tmp_zip" -d "$font_dir"
-  rm "$tmp_zip"
-
-  # Update font cache
-  sudo fc-cache -fv
-
-  echo "[adwaita_mono_nerd_font] Installed $font_name to $font_dir"
+  util_install_font "[adwaita_mono_nerd_font]" "$font_name" "$ADWAITA_MONO_NERD_FONT_URL" "$font_dir"
 }
 
+set_fonts() {
+  local font_option="${1:-}"
+  local monospace_font
+  local sans_serif_font
 
-adwaita_mono_nerd_as_monospace() {
-  echo "[adwaita_mono_nerd_as_monospace] Set Adwaita Mono Nerd Font as the monospace font system-wide"
+  case "$font_option" in
+    adwaita)
+      monospace_font="Adwaita Mono Nerd Font"
+      sans_serif_font="Adwaita Sans"
+      ;;
+    *)
+      echo "Usage: set_fonts {adwaita}" >&2
+      return 2
+      ;;
+  esac
 
-  mkdir -p ~/.config/fontconfig/conf.d
+  local prefix="[set_fonts $font_option]"
+  local config_dir="$HOME/.config/fontconfig/conf.d"
+  mkdir -p "$config_dir"
 
-  cat > ~/.config/fontconfig/conf.d/99-monospace-adwaita-nerd.conf <<'EOF'
+  rm -f \
+    "$config_dir/99-monospace-adwaita-nerd.conf" \
+    "$config_dir/99-sans-serif-adwaita.conf"
+
+  cat > "$config_dir/99-monospace.conf" <<EOF
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
   <alias>
     <family>monospace</family>
     <prefer>
-      <family>Adwaita Mono Nerd Font</family>
+      <family>$monospace_font</family>
     </prefer>
   </alias>
 </fontconfig>
 EOF
 
-  sudo fc-cache -fv
-
-  echo "[adwaita_mono_nerd_as_monospace] Set Adwaita Mono Nerd Font as the monospace font"
-}
-
-adwaita_sans_as_sans_serif() {
-  echo "[adwaita_sans_as_sans_serif] Set Adwaita Sans as the sans-serif font system-wide"
-
-  mkdir -p ~/.config/fontconfig/conf.d
-
-  cat > ~/.config/fontconfig/conf.d/99-sans-serif-adwaita.conf <<'EOF'
+  cat > "$config_dir/99-sans-serif.conf" <<EOF
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
   <alias>
     <family>sans-serif</family>
     <prefer>
-      <family>Adwaita Sans</family>
+      <family>$sans_serif_font</family>
     </prefer>
   </alias>
 </fontconfig>
@@ -500,8 +491,11 @@ EOF
 
   sudo fc-cache -fv
 
-  echo "[adwaita_sans_as_sans_serif] Set Adwaita Sans as the sans-serif font"
+  echo "$prefix Set monospace to $monospace_font"
+  echo "$prefix Set sans-serif to $sans_serif_font"
 }
+
+set_fonts_adwaita() { set_fonts adwaita; }
 
 jellyfin() {
   echo "[jellyfin] Set up Jellyfin media server"

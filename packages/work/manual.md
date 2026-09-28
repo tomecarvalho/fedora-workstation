@@ -1,2 +1,3 @@
+- [Clockify AppImage](https://clockify.me/linux-time-tracking)
 - [Slack RPM](https://slack.com/intl/en-gb/downloads/linux)
 - [Zoom RPM](https://zoom.us/download)
