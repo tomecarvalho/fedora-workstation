@@ -54,3 +54,7 @@ backup_home() {
 sync_local() {
 	"$BACKUP_SCRIPTS_PATH/sync-local.sh" "$@"
 }
+
+keep_awake() {
+  "$SCRIPTS_PATH/keep-awake.sh" "$@"
+}

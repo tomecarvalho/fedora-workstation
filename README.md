@@ -15,6 +15,7 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [packages/general/](packages/general/) | General packages to install on any Fedora Workstation machine. |
 | [packages/work/](packages/work/)       | Packages that are only necessary for work.                     |
 | [packages/remove/](packages/remove/)   | Bloat to remove from a standard installation.                  |
+| [packages/niri/](packages/niri/)       | Niri and DankMaterialShell package profile.                    |
 
 ## Scripts
 
@@ -33,3 +34,17 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [core](scripts/utils/core.sh)                                | Core utility helpers shared by shell scripts.                                                  |
 | [git](scripts/utils/git.sh)                                  | Git-specific utility helpers shared by shell scripts.                                          |
 | [packages](scripts/utils/packages.sh)                        | Package list utility helpers.                                                                  |
+
+## Niri and DankMaterialShell
+
+The optional Niri profile enables the `avengemedia/dms` COPR, installs Niri,
+DMS, and its supported integrations, generates an initial Niri configuration,
+and attaches DMS to the Niri user service. It is not included in the normal
+GNOME installation:
+
+```bash
+./scripts/install.sh -s "niri_dms"
+```
+
+The profile uses `systemctl --user add-wants niri.service dms` instead of
+globally enabling DMS, so DMS starts only in Niri sessions and not in GNOME.

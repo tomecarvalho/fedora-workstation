@@ -1,5 +1,6 @@
 adw-gtk3-theme
 brave-origin
+brightnessctl
 btrfs-assistant
 celluloid
 curl
@@ -31,6 +32,7 @@ snapper
 stow
 thunderbird
 webapp-manager
+ydotool
 zoxide
 zsh
 zsh-syntax-highlighting

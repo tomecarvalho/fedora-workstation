@@ -21,6 +21,7 @@ ALL_STEPS=(
   rpm_fusion
   repos
   copr
+  niri_dms
   dnf_install
   dnf_uninstall
   flatpak_install
@@ -48,6 +49,7 @@ ALIASES_DIR="$SCRIPT_DIR/../aliases"
 PKGS_DIR="$SCRIPT_DIR/../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
 REMOVE_PKGS_DIR="$PKGS_DIR/remove"
+NIRI_PKGS_DIR="$PKGS_DIR/niri"
 STOW_DIR="$SCRIPT_DIR/../stow"
 EXTENSIONS_FILE="$SCRIPT_DIR/../gnome/extensions/extensions.txt"
 
@@ -180,6 +182,32 @@ snap_install() {
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
+}
+
+niri_dms() {
+  local prefix="[niri_dms]"
+  local copr_file="$NIRI_PKGS_DIR/copr.txt"
+  local pkg_file="$NIRI_PKGS_DIR/dnf.txt"
+  local repositories=($(util_read_package_list "$copr_file"))
+  local packages=($(util_read_package_list "$pkg_file"))
+
+  echo "$prefix Enable DMS COPR repositories"
+  for repository in "${repositories[@]}"; do
+    sudo dnf copr enable -y "$repository"
+  done
+
+  echo "$prefix Install Niri, DankMaterialShell, and DMS integrations"
+  sudo dnf in -y "${packages[@]}"
+
+  if [[ ! -f "$HOME/.config/niri/config.kdl" ]]; then
+    echo "$prefix Generate the initial Niri configuration with DMS"
+    dms setup
+  else
+    echo "$prefix Existing Niri configuration found; skipping dms setup"
+  fi
+
+  echo "$prefix Attach DMS to the Niri user service"
+  systemctl --user add-wants niri.service dms
 }
 
 codecs() {
@@ -689,3 +717,4 @@ for s in "${RUN_STEPS[@]}"; do
     exit 3
   fi
 done
+

@@ -1,0 +1,10 @@
+niri
+dms
+accountsservice
+cava
+dankcalendar
+dgop
+dsearch
+i2c-tools
+matugen
+qt6-multimedia
