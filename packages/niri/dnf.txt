@@ -1,10 +1,11 @@
-niri
-dms
 accountsservice
 cava
 dankcalendar
 dgop
+dms
 dsearch
 i2c-tools
+kdeconnectd
 matugen
+niri
 qt6-multimedia

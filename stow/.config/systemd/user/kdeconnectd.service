@@ -1,0 +1,11 @@
+[Unit]
+Description=KDE Connect daemon
+After=niri.service
+PartOf=niri.service
+
+[Service]
+ExecStart=/usr/bin/kdeconnectd
+Restart=on-failure
+
+[Install]
+WantedBy=niri.service
