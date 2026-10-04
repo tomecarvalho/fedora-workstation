@@ -1,0 +1,352 @@
+{
+  "id": "kanagawa",
+  "name": "Kanagawa",
+  "version": "1.0.0",
+  "author": "rebelot (kanagawa.nvim palette)",
+  "description": "Colors inspired by Hokusai's The Great Wave off Kanagawa",
+  "dark": {},
+  "light": {},
+  "variants": {
+    "type": "multi",
+    "defaults": {
+      "dark": { "flavor": "wave", "accent": "blue" },
+      "light": { "flavor": "lotus", "accent": "blue" }
+    },
+    "flavors": [
+      {
+        "id": "wave",
+        "name": "Wave",
+        "dark": {
+          "surface": "#2a2a37",
+          "surfaceText": "#dcd7ba",
+          "surfaceVariant": "#1f1f28",
+          "surfaceVariantText": "#c8c093",
+          "background": "#1f1f28",
+          "backgroundText": "#dcd7ba",
+          "outline": "#727169",
+          "surfaceContainer": "#1f1f28",
+          "surfaceContainerHigh": "#1a1a22",
+          "surfaceContainerHighest": "#16161d",
+          "error": "#e82424",
+          "warning": "#ff9e3b",
+          "info": "#7e9cd8"
+        }
+      },
+      {
+        "id": "dragon",
+        "name": "Dragon",
+        "dark": {
+          "surface": "#282727",
+          "surfaceText": "#c5c9c5",
+          "surfaceVariant": "#181616",
+          "surfaceVariantText": "#a6a69c",
+          "background": "#181616",
+          "backgroundText": "#c5c9c5",
+          "outline": "#625e5a",
+          "surfaceContainer": "#181616",
+          "surfaceContainerHigh": "#12120f",
+          "surfaceContainerHighest": "#0d0c0c",
+          "error": "#e82424",
+          "warning": "#ff9e3b",
+          "info": "#8ba4b0"
+        }
+      },
+      {
+        "id": "lotus",
+        "name": "Lotus",
+        "light": {
+          "surface": "#d5cea3",
+          "surfaceText": "#545464",
+          "surfaceVariant": "#f2ecbc",
+          "surfaceVariantText": "#716e61",
+          "background": "#f2ecbc",
+          "backgroundText": "#545464",
+          "outline": "#a09cac",
+          "surfaceContainer": "#f2ecbc",
+          "surfaceContainerHigh": "#e5ddb0",
+          "surfaceContainerHighest": "#dcd5ac",
+          "error": "#e82424",
+          "warning": "#e98a00",
+          "info": "#4d699b"
+        }
+      }
+    ],
+    "accents": [
+      {
+        "id": "sakura",
+        "name": "Sakura",
+        "wave": {
+          "primary": "#d27e99",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#9c6177",
+          "secondary": "#774f5c",
+          "surfaceTint": "#9c6177"
+        },
+        "dragon": {
+          "primary": "#a292a3",
+          "primaryText": "#181616",
+          "primaryContainer": "#796d79",
+          "secondary": "#6b496d",
+          "surfaceTint": "#796d79"
+        },
+        "lotus": {
+          "primary": "#b35b79",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#c6868d",
+          "secondary": "#cab0b9",
+          "surfaceTint": "#c6868d"
+        }
+      },
+      {
+        "id": "red",
+        "name": "Red",
+        "wave": {
+          "primary": "#e46876",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#a9525f",
+          "secondary": "#764e53",
+          "surfaceTint": "#a9525f"
+        },
+        "dragon": {
+          "primary": "#c4746e",
+          "primaryText": "#181616",
+          "primaryContainer": "#905854",
+          "secondary": "#6c4b48",
+          "surfaceTint": "#905854"
+        },
+        "lotus": {
+          "primary": "#c84053",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#d57472",
+          "secondary": "#c9aeb2",
+          "surfaceTint": "#d57472"
+        }
+      },
+      {
+        "id": "crimson",
+        "name": "Crimson",
+        "wave": {
+          "primary": "#c34043",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#92363b",
+          "secondary": "#5c3d3e",
+          "surfaceTint": "#92363b"
+        },
+        "dragon": {
+          "primary": "#c34043",
+          "primaryText": "#181616",
+          "primaryContainer": "#903336",
+          "secondary": "#5c3d3e",
+          "surfaceTint": "#903336"
+        },
+        "lotus": {
+          "primary": "#d7474b",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#df786d",
+          "secondary": "#ceb5b6",
+          "surfaceTint": "#df786d"
+        }
+      },
+      {
+        "id": "orange",
+        "name": "Orange",
+        "wave": {
+          "primary": "#ffa066",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#bc7953",
+          "secondary": "#7e6454",
+          "surfaceTint": "#bc7953"
+        },
+        "dragon": {
+          "primary": "#b6927b",
+          "primaryText": "#181616",
+          "primaryContainer": "#876d5d",
+          "secondary": "#6c5648",
+          "surfaceTint": "#876d5d"
+        },
+        "lotus": {
+          "primary": "#cc6d00",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#d79338",
+          "secondary": "#bbac99",
+          "surfaceTint": "#d79338"
+        }
+      },
+      {
+        "id": "yellow",
+        "name": "Yellow",
+        "wave": {
+          "primary": "#e6c384",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#aa9268",
+          "secondary": "#807155",
+          "surfaceTint": "#aa9268"
+        },
+        "dragon": {
+          "primary": "#c4b28a",
+          "primaryText": "#181616",
+          "primaryContainer": "#908367",
+          "secondary": "#766a4f",
+          "surfaceTint": "#908367"
+        },
+        "lotus": {
+          "primary": "#de9800",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#e4b138",
+          "secondary": "#bfb5a0",
+          "surfaceTint": "#e4b138"
+        }
+      },
+      {
+        "id": "green",
+        "name": "Green",
+        "wave": {
+          "primary": "#98bb6c",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#748c58",
+          "secondary": "#596846",
+          "surfaceTint": "#748c58"
+        },
+        "dragon": {
+          "primary": "#87a987",
+          "primaryText": "#181616",
+          "primaryContainer": "#667d65",
+          "secondary": "#486c48",
+          "surfaceTint": "#667d65"
+        },
+        "lotus": {
+          "primary": "#6f894e",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#96a76f",
+          "secondary": "#afbe9d",
+          "surfaceTint": "#96a76f"
+        }
+      },
+      {
+        "id": "aqua",
+        "name": "Aqua",
+        "wave": {
+          "primary": "#7aa89f",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#5f7f7b",
+          "secondary": "#446760",
+          "surfaceTint": "#5f7f7b"
+        },
+        "dragon": {
+          "primary": "#8ea4a2",
+          "primaryText": "#181616",
+          "primaryContainer": "#6b7978",
+          "secondary": "#486c69",
+          "surfaceTint": "#6b7978"
+        },
+        "lotus": {
+          "primary": "#597b75",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#879d8a",
+          "secondary": "#9cbdb7",
+          "surfaceTint": "#879d8a"
+        }
+      },
+      {
+        "id": "sky",
+        "name": "Sky",
+        "wave": {
+          "primary": "#7fb4ca",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#628799",
+          "secondary": "#4e6974",
+          "surfaceTint": "#628799"
+        },
+        "dragon": {
+          "primary": "#658594",
+          "primaryText": "#181616",
+          "primaryContainer": "#4e646e",
+          "secondary": "#3b4f58",
+          "surfaceTint": "#4e646e"
+        },
+        "lotus": {
+          "primary": "#4e8ca2",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#7fa9aa",
+          "secondary": "#a6bcc3",
+          "surfaceTint": "#7fa9aa"
+        }
+      },
+      {
+        "id": "blue",
+        "name": "Blue",
+        "wave": {
+          "primary": "#7e9cd8",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#6176a3",
+          "secondary": "#515e79",
+          "surfaceTint": "#6176a3"
+        },
+        "dragon": {
+          "primary": "#8ba4b0",
+          "primaryText": "#181616",
+          "primaryContainer": "#687982",
+          "secondary": "#4a6370",
+          "surfaceTint": "#687982"
+        },
+        "lotus": {
+          "primary": "#4d699b",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#7e90a5",
+          "secondary": "#a3aec2",
+          "surfaceTint": "#7e90a5"
+        }
+      },
+      {
+        "id": "steel",
+        "name": "Steel",
+        "wave": {
+          "primary": "#9cabca",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#768199",
+          "secondary": "#54627f",
+          "surfaceTint": "#768199"
+        },
+        "dragon": {
+          "primary": "#949fb5",
+          "primaryText": "#181616",
+          "primaryContainer": "#6f7685",
+          "secondary": "#4e5b74",
+          "surfaceTint": "#6f7685"
+        },
+        "lotus": {
+          "primary": "#6693bf",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#90aebe",
+          "secondary": "#b8c4d0",
+          "surfaceTint": "#90aebe"
+        }
+      },
+      {
+        "id": "violet",
+        "name": "Violet",
+        "wave": {
+          "primary": "#957fb8",
+          "primaryText": "#1f1f28",
+          "primaryContainer": "#72628d",
+          "secondary": "#58496e",
+          "surfaceTint": "#72628d"
+        },
+        "dragon": {
+          "primary": "#8992a7",
+          "primaryText": "#181616",
+          "primaryContainer": "#676d7c",
+          "secondary": "#48536c",
+          "surfaceTint": "#676d7c"
+        },
+        "lotus": {
+          "primary": "#624c83",
+          "primaryText": "#f2ecbc",
+          "primaryContainer": "#8d7c94",
+          "secondary": "#a89abc",
+          "surfaceTint": "#8d7c94"
+        }
+      }
+    ]
+  }
+}
