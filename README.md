@@ -48,3 +48,19 @@ GNOME installation:
 
 The profile uses `systemctl --user add-wants niri.service dms` instead of
 globally enabling DMS, so DMS starts only in Niri sessions and not in GNOME.
+
+Arguments after the selected step are forwarded to that step. Use `--` when a
+forwarded argument has the same name as an installer option:
+
+```bash
+./scripts/install.sh -s "stow_apply" -n
+./scripts/install.sh -s "stow_apply" -- --simulate
+```
+
+By default, Stow refuses to replace existing unmanaged files. To preview or
+adopt existing files into the repository, pass `--adopt` explicitly:
+
+```bash
+./scripts/install.sh -s "stow_apply" -- --adopt --simulate
+./scripts/install.sh -s "stow_apply" -- --adopt
+```

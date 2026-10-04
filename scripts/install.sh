@@ -566,6 +566,29 @@ jellyfin() {
 
 stow_apply() {
   local prefix="[stow_apply]"
+  local -a stow_flags=(--restow --no-folding)
+  local dry_run=0
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -n|--no|--simulate)
+        dry_run=1
+        stow_flags+=(--simulate --verbose)
+        ;;
+      --adopt)
+        stow_flags+=(--adopt)
+        ;;
+      *)
+        echo "$prefix Unknown option: $1 (supported: -n, --no, --simulate, --adopt)" >&2
+        return 2
+        ;;
+    esac
+    shift
+  done
+
+  if (( dry_run )); then
+    echo "$prefix DRY RUN: no changes will be made"
+  fi
 
   echo "$prefix Symlink stow-managed dotfiles to home directory"
 
@@ -574,7 +597,7 @@ stow_apply() {
 
   if [[ -z "$stow_bin" ]]; then
     echo "$prefix GNU Stow is not installed. Install it first and re-run this step." >&2
-    return
+    return 1
   fi
 
   if [[ ! -d "$STOW_DIR" ]]; then
@@ -591,10 +614,12 @@ stow_apply() {
 
   if [[ ${#packages[@]} -eq 0 ]]; then
     echo "$prefix No stow packages found in $STOW_DIR"
-    return
+    return 0
   fi
 
   echo "$prefix Stowing ${#packages[@]} package(s) from $STOW_DIR into $HOME"
+
+  local failed=0
 
   for package in "${packages[@]}"; do
     local package_target="$HOME"
@@ -604,18 +629,23 @@ stow_apply() {
     fi
 
     echo "$prefix Stowing package: $package"
-    "$stow_bin" --restow --dir "$STOW_DIR" --target "$package_target" "$package"
+    "$stow_bin" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package" \
+      || { echo "$prefix Failed to stow package: $package" >&2; failed=1; }
   done
+
+  return "$failed"
 }
 
 usage() {
   cat <<EOF
-Usage: $0 [-s "step1,step2" | -s "name1,name2"] [-l]
+Usage: $0 [-s "step1,step2" | -s "name1,name2"] [-- step-arguments...] [-l]
 
 Options:
   -s, --steps   Comma-separated list of steps to run. Accepts either descriptive names or (deprecated) numbers.
                 Steps run in the default order; duplicates are ignored.
                 Examples: -s "dnf_up" or -s "2,3"
+  --            Stop parsing installer options and pass the remaining arguments to each selected step.
+                Arguments not matching an installer option are also forwarded, for convenience.
   -l, --list    List all available steps in order.
   -h, --help    Show this help message.
 
@@ -633,6 +663,7 @@ EOF
 # Parse args
 STEPS_ARG=""
 LIST_ONLY=false
+declare -a STEP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -s|--steps)
@@ -654,10 +685,14 @@ while [[ $# -gt 0 ]]; do
       usage
       exit 0
       ;;
+    --)
+      shift
+      STEP_ARGS+=("$@")
+      break
+      ;;
     *)
-      echo "Unknown argument: $1" >&2
-      usage
-      exit 2
+      STEP_ARGS+=("$1")
+      shift
       ;;
   esac
 done
@@ -715,10 +750,9 @@ fi
 # Dispatch by name with validation
 for s in "${RUN_STEPS[@]}"; do
   if declare -F "$s" > /dev/null; then
-    "$s"
+    "$s" "${STEP_ARGS[@]}"
   else
     echo "Unknown step function: $s" >&2
     exit 3
   fi
 done
-

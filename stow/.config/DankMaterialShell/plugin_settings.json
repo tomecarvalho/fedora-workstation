@@ -1,0 +1,25 @@
+{
+  "dankKDEConnect": {
+    "enabled": true,
+    "selectedDeviceId": "e51e7786b4ae4e82aaa8952ea8d7edc9"
+  },
+  "calculator": {
+    "enabled": true,
+    "trigger": "",
+    "noTrigger": false
+  },
+  "emojiLauncher": {
+    "enabled": true
+  },
+  "ddcBrightness": {
+    "enabled": true
+  },
+  "webSearch": {
+    "enabled": true,
+    "searchEngines": [],
+    "disabledEngines": []
+  },
+  "niriWindows": {
+    "enabled": true
+  }
+}
