@@ -1,0 +1,13 @@
+layout {
+    // Centre single column
+    always-center-single-column true
+
+    // Make tab indicator visible
+    tab-indicator {
+        position "top"
+        place-within-column
+        length total-proportion=1.0
+        gaps-between-tabs 4
+        corner-radius 12
+    }
+}

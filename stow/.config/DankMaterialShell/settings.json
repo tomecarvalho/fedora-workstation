@@ -262,7 +262,8 @@
       "rightWidgets": [
         {
           "id": "music",
-          "enabled": true
+          "enabled": true,
+          "mediaSize": 3
         },
         {
           "id": "systemTray",

@@ -1,12 +1,6 @@
 // DMS Window Rules - Managed by DankMaterialShell
 // Do not edit manually - changes may be overwritten
 
-// @id=dms-floating-windows @name=DMS Floating Windows
-window-rule {
-    match app-id="^com.danklinux.dms$"
-    open-floating true
-}
-
 // @id=wr_1790509306314621636 @name=Nautilus
 window-rule {
     match app-id="^org.gnome.Nautilus$"
@@ -40,5 +34,11 @@ window-rule {
 // @id=wr_1790660960924116673 @name=Google Chrome
 window-rule {
     match app-id="^google-chrome$"
+    open-maximized true
+}
+
+// @id=wr_1791186814257792909 @name=spotify
+window-rule {
+    match app-id="^spotify$"
     open-maximized true
 }
