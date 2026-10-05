@@ -172,6 +172,16 @@
   "osdPosition": 4,
   "osdPowerProfileEnabled": true,
   "powerActionHoldDuration": 0.25,
+  "powerMenuActions": [
+    "reboot",
+    "logout",
+    "poweroff",
+    "lock",
+    "suspend",
+    "restart",
+    "switchuser"
+  ],
+  "powerMenuDefaultAction": "poweroff",
   "screenPreferences": {
     "notepad": [
       "all"
