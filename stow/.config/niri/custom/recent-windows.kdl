@@ -1,0 +1,31 @@
+recent-windows {
+    binds {
+        // Grave and Escape are redundant, for convenience on 60% keyboards.
+        // Mod in place of Alt narrows the scope from the output to the workspace.
+        // Ctrl in addition to Alt expands the scope to all.
+
+        Alt+Tab               { next-window     scope="output"; }
+        Alt+Shift+Tab         { previous-window scope="output"; }
+
+        Alt+Ctrl+Tab          { next-window     scope="all"; }
+        Alt+Ctrl+Shift+Tab    { previous-window scope="all"; }
+
+        Alt+grave             { next-window     scope="output" filter="app-id"; }
+        Alt+Escape            { next-window     scope="output" filter="app-id"; }
+        Alt+Shift+grave       { previous-window scope="output" filter="app-id"; }
+        Alt+Shift+Escape      { previous-window scope="output" filter="app-id"; }
+
+        Alt+Ctrl+grave        { next-window     scope="all" filter="app-id"; }
+        Alt+Ctrl+Escape       { next-window     scope="all" filter="app-id"; }
+        Alt+Ctrl+Shift+grave  { previous-window scope="all" filter="app-id"; }
+        Alt+Ctrl+Shift+Escape { previous-window scope="all" filter="app-id"; }
+
+        Mod+Tab               { next-window     scope="workspace"; }
+        Mod+Shift+Tab         { previous-window scope="workspace"; }
+
+        Mod+grave             { next-window     scope="workspace" filter="app-id"; }
+        Mod+Escape            { next-window     scope="workspace" filter="app-id"; }
+        Mod+Shift+grave       { previous-window scope="workspace" filter="app-id"; }
+        Mod+Shift+Escape      { previous-window scope="workspace" filter="app-id"; }
+    }
+}

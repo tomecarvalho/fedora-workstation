@@ -10,10 +10,6 @@
       "path": "DankKDEConnect",
       "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
     },
-    "ddcBrightness": {
-      "repo": "https://github.com/smithyyang/dms-brightness-plugin",
-      "commit": "d3221bb267e99f02dd7793b505ece2cbae118623"
-    },
     "emojiLauncher": {
       "repo": "https://github.com/devnullvoid/dms-emoji-launcher",
       "commit": "8ff394e3ddfcb2fd755ed2e7b4c6f01f3e26e596"

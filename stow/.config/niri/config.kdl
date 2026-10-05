@@ -240,7 +240,7 @@ recent-windows {
     }
 }
 
-// Include dms files
+// Include dms files.
 include optional=true "dms/colors.kdl"
 include optional=true "dms/layout.kdl"
 include optional=true "dms/alttab.kdl"
@@ -250,5 +250,6 @@ include optional=true "dms/cursor.kdl"
 include optional=true "dms/input.kdl"
 include "dms/windowrules.kdl"
 
-// Include custom files
+// Include custom files - don't forget to stow them.
 include optional=true "custom/layout.kdl"
+include optional=true "custom/recent-windows.kdl"
