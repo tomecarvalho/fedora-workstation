@@ -12,7 +12,7 @@
     "enabled": true
   },
   "ddcBrightness": {
-    "enabled": true
+    "enabled": false
   },
   "webSearch": {
     "enabled": true,
