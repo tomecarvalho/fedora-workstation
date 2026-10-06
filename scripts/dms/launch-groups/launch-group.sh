@@ -7,12 +7,12 @@
 #   launch-group.sh <group>
 #   launch-group.sh --list
 #
-# The group definitions live in launch-groups.yaml next to this script.
+# The group definitions live in config.yaml next to this script.
 
 set -u
 
 script_dir=$(dirname "$(readlink -f "$0")")
-config=${LAUNCH_GROUPS_CONFIG:-"$script_dir/launch-groups.yaml"}
+config=${LAUNCH_GROUPS_CONFIG:-"$script_dir/config.yaml"}
 poll_attempts=${LAUNCH_GROUPS_POLL_ATTEMPTS:-40}
 poll_delay=${LAUNCH_GROUPS_POLL_DELAY:-0.25}
 

@@ -12,7 +12,7 @@
 
 script_dir=$(dirname "$(readlink -f "$0")")
 
-config="${BRIGHTNESS_CONFIG:-$script_dir/brightness-cycle.yaml}"
+config="${BRIGHTNESS_CONFIG:-$script_dir/config.yaml}"
 
 # Remembers the last applied preset. XDG_RUNTIME_DIR is a per-user tmpfs
 # (cleared on reboot/logout), with /tmp as a fallback.
