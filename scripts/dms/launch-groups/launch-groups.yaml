@@ -1,0 +1,48 @@
+# Output names come from `niri msg -j outputs`.
+
+groups:
+  work:
+    displays:
+      "HDMI-A-1+eDP-1":
+        - app_id: '^org\.mozilla\.firefox$'
+          reuse: false
+          output: HDMI-A-1
+          workspace: 1
+          command: firefox
+        - app_id: '^(slack|com\.slack\.Slack)$'
+          reuse: true
+          output: HDMI-A-1
+          workspace: 2
+          command: slack
+        - app_id: '^(thunderbird|org\.mozilla\.Thunderbird|net\.thunderbird\.Thunderbird)$'
+          reuse: true
+          output: HDMI-A-1
+          workspace: 2
+          command: thunderbird
+        - app_id: '^(cursor|com\.todesktop\.[^ ]+)$'
+          reuse: false
+          output: eDP-1
+          workspace: 1
+          command: cursor
+
+      eDP-1:
+        - app_id: '^(cursor|com\.todesktop\.[^ ]+)$'
+          reuse: false
+          output: eDP-1
+          workspace: 1
+          command: cursor
+        - app_id: '^org\.mozilla\.firefox$'
+          reuse: false
+          output: eDP-1
+          workspace: 2
+          command: firefox
+        - app_id: '^(slack|com\.slack\.Slack)$'
+          reuse: true
+          output: eDP-1
+          workspace: 3
+          command: slack
+        - app_id: '^(thunderbird|org\.mozilla\.Thunderbird|net\.thunderbird\.Thunderbird)$'
+          reuse: true
+          output: eDP-1
+          workspace: 3
+          command: thunderbird
