@@ -1,6 +1,6 @@
 binds {
     // Applications
-    Mod+Return hotkey-overlay-title="Open Terminal (Ghostty)" { spawn "ghostty"; }
+    Mod+Return hotkey-overlay-title="Open Terminal (Ghostty)" { spawn "ghostty" "+new-window"; }
     Mod+B hotkey-overlay-title="Open Browser (Firefox)" { spawn "firefox"; }
     Mod+Ctrl+B hotkey-overlay-title="Open Browser (Firefox) - Private Window" { spawn "firefox" "--private-window"; }
     Mod+E hotkey-overlay-title="Open Explorer (Nautilus)" { spawn "nautilus" "--new-window"; }
