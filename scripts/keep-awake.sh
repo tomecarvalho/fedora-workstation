@@ -35,10 +35,20 @@ cleanup() {
 trap cleanup EXIT
 trap 'exit 0' INT TERM
 
-# Start ydotoold if needed
+# Start ydotoold if needed. A socket can remain after the daemon exits, so
+# checking only for the socket file is not enough.
 export YDOTOOL_SOCKET="${YDOTOOL_SOCKET:-${XDG_RUNTIME_DIR:-/run/user/$UID}/.ydotool_socket}"
 
-if [[ ! -S $YDOTOOL_SOCKET ]]; then
+ydotool_ready() {
+    [[ -S $YDOTOOL_SOCKET ]] && ydotool mousemove -x 0 -y 0 >/dev/null 2>&1
+}
+
+if ! ydotool_ready; then
+    if [[ -e $YDOTOOL_SOCKET ]]; then
+        rm -f -- "$YDOTOOL_SOCKET" \
+            || { echo "Could not remove stale ydotool socket: $YDOTOOL_SOCKET" >&2; exit 1; }
+    fi
+
     if [[ -r /dev/uinput && -w /dev/uinput ]]; then
         ydotoold --socket-path "$YDOTOOL_SOCKET" >/dev/null 2>&1 &
     else
@@ -50,11 +60,11 @@ if [[ ! -S $YDOTOOL_SOCKET ]]; then
     ydotoold_pid=$!
 
     for _ in {1..20}; do
-        [[ -S $YDOTOOL_SOCKET ]] && break
+        ydotool_ready && break
         sleep 0.1
     done
 
-    [[ -S $YDOTOOL_SOCKET ]] || { echo "ydotoold failed to create socket: $YDOTOOL_SOCKET" >&2; exit 1; }
+    ydotool_ready || { echo "ydotoold is not responding on socket: $YDOTOOL_SOCKET" >&2; exit 1; }
 fi
 
 # Save every device's brightness before touching any of them
