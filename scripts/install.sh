@@ -209,6 +209,9 @@ niri_dms() {
   echo "$prefix Attach DMS to the Niri user service"
   systemctl --user add-wants niri.service dms
 
+  echo "$prefix Enable Ghostty user service"
+  systemctl enable --user app-com.mitchellh.ghostty.service
+
   echo "$prefix Attach KDE Connect daemon to the Niri user service"
   systemctl --user daemon-reload
   systemctl --user add-wants niri.service kdeconnectd.service
