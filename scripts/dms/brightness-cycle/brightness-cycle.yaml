@@ -1,0 +1,23 @@
+# Device labels are used in brightness notifications.
+devices:
+  backlight:intel_backlight:
+    label: Laptop
+    output: eDP-1
+  ddc:i2c-18:
+    label: HDMI
+    output: HDMI-A-1
+
+# Presets are applied in the order listed here when cycling.
+presets:
+  Low:
+    backlight:intel_backlight: 65
+    ddc:i2c-18: 75
+  Medium:
+    backlight:intel_backlight: 85
+    ddc:i2c-18: 95
+  High:
+    backlight:intel_backlight: 90
+    ddc:i2c-18: 100
+  Max:
+    backlight:intel_backlight: 100
+    ddc:i2c-18: 100

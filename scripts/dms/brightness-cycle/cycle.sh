@@ -3,26 +3,16 @@
 # Usage: cycle.sh [next|<PresetName>]
 #
 # Cycles (or directly applies) brightness presets defined in
-# presets.conf, which lives next to this script.
-# Friendly device names come from devices.conf (also next to it).
-# Override the locations with BRIGHTNESS_PRESETS=/path and BRIGHTNESS_DEVICES=/path.
+# brightness-cycle.yaml, which lives next to this script.
+# Override its location with BRIGHTNESS_CONFIG=/path.
 #
-# presets.conf, one line per preset/device pair (# starts a comment):
-#   <PresetName>  <device-id>  <percent>
-# Presets cycle in the order they first appear in the config.
-# Lines for devices that aren't present on this machine are skipped.
-#
-# devices.conf, one line per device:
-#   <device-id>  <label>
-# The label is shown in the notification (may contain spaces). It is optional:
-# a device without one is shown by its id minus the "backlight:"/"ddc:" prefix.
+# The YAML config contains a devices map of IDs to labels/output names and a
+# presets map of preset names to device IDs and percentages. Presets cycle in
+# YAML order.
 
 script_dir=$(dirname "$(readlink -f "$0")")
 
-# Config paths: use the env override if set, otherwise the files next to the script.
-# ${VAR:-default} means "value of VAR, or default if VAR is unset/empty".
-conf="${BRIGHTNESS_PRESETS:-$script_dir/presets.conf}"
-devconf="${BRIGHTNESS_DEVICES:-$script_dir/devices.conf}"
+config="${BRIGHTNESS_CONFIG:-$script_dir/brightness-cycle.yaml}"
 
 # Remembers the last applied preset. XDG_RUNTIME_DIR is a per-user tmpfs
 # (cleared on reboot/logout), with /tmp as a fallback.
@@ -43,21 +33,27 @@ notify() {
 }
 
 # Print the label for a device id, or nothing if there is none.
-#   $1 == d          - first column matches the device id
-#   $1 = ""; sub(...) - drop the id and the whitespace after it, leaving the label
+# The label is optional; callers fall back to the device ID when it is empty.
 label_for() {
-  [ -r "$devconf" ] || return 0
-  awk -v d="$1" '$1 == d { $1 = ""; sub(/^[[:space:]]+/, ""); print; exit }' "$devconf"
+  DEVICE="$1" yq -r '.devices[strenv(DEVICE)].label // ""' "$config"
+}
+
+output_for() {
+  DEVICE="$1" yq -r '.devices[strenv(DEVICE)].output // ""' "$config"
 }
 
 # Bail out early if the config can't be read.
-[ -r "$conf" ] || { notify "Brightness: missing config" "$conf"; exit 1; }
+command -v yq >/dev/null 2>&1 ||
+  { notify "Brightness: yq is unavailable"; exit 1; }
+command -v niri >/dev/null 2>&1 ||
+  { notify "Brightness: niri is unavailable"; exit 1; }
+command -v jq >/dev/null 2>&1 ||
+  { notify "Brightness: jq is unavailable"; exit 1; }
+[ -r "$config" ] || { notify "Brightness: missing config" "$config"; exit 1; }
 
-# Build the ordered list of unique preset names from the config.
-#   !/^[[:space:]]*(#|$)/ - Skip comment lines and blank lines
-#   !seen[$1]++           - True only the first time a name appears (dedupe, keeps order)
-#   {print $1}            - Print the first column (preset name)
-presets=$(awk '!/^[[:space:]]*(#|$)/ && !seen[$1]++ {print $1}' "$conf")
+# Build the ordered list of preset names from the config.
+presets=$(yq -r '.presets | to_entries[] | .key' "$config" 2>/dev/null) ||
+  { notify "Brightness: invalid config" "$config"; exit 1; }
 [ -n "$presets" ] || { notify "Brightness: no presets in config"; exit 1; }
 
 # Decide which preset to apply: the one named on the command line,
@@ -81,17 +77,33 @@ else
   printf '%s\n' "$presets" | grep -qx -- "$target" || { notify "Brightness: unknown preset" "$target"; exit 1; }
 fi
 
-# Ask DMS which brightness devices exist right now, so we can skip config
-# lines for hardware that isn't connected (other laptop, unplugged monitor).
+# Ask DMS which brightness devices exist right now, and Niri which displays
+# are active. DMS may retain an unplugged DDC device, so active outputs are
+# the source of truth for notification membership.
 devices=$(dms ipc call brightness list 2>/dev/null)
+outputs=$(niri msg -j outputs 2>/dev/null) || {
+  notify "Brightness: could not query displays"
+  exit 1
+}
+printf '%s\n' "$outputs" | jq -e 'type == "object"' >/dev/null 2>&1 || {
+  notify "Brightness: invalid display data"
+  exit 1
+}
 summary=""
+preset_devices=$(CONFIG="$config" PRESET="$target" yq -r \
+  '.presets[strenv(PRESET)] | to_entries[] | [.key, (.value | tostring)] | @tsv' \
+  "$config" 2>/dev/null) || {
+  notify "Brightness: invalid config" "$config"
+  exit 1
+}
 
-# Read the config line by line, splitting each line into fields:
-#   name = preset, dev = device id, val = percent, _ = anything extra (ignored)
-while read -r name dev val _; do
-  case $name in ''|'#'*) continue ;; esac            # skip blank and comment lines
-  [ "$name" = "$target" ] || continue                # only lines for the chosen preset
-  printf '%s\n' "$devices" | grep -q "^$dev " || continue   # skip devices not on this machine
+# Read the selected preset's device/value pairs from YAML.
+while read -r dev val; do
+  printf '%s\n' "$devices" | grep -q "^$dev " || continue   # skip unknown devices
+  output=$(output_for "$dev")
+  [ -n "$output" ] || continue
+  printf '%s\n' "$outputs" | jq -e --arg output "$output" 'has($output)' \
+    >/dev/null 2>&1 || continue # skip outputs that aren't currently active
 
   # Run in the background (&) so slow DDC monitors don't delay the laptop panel.
   dms ipc call brightness set "$val" "$dev" >/dev/null 2>&1 &
@@ -102,7 +114,9 @@ while read -r name dev val _; do
   # "backlight:" / "ddc:" prefix stripped.
   label=$(label_for "$dev")
   summary="${summary:+$summary, }${label:-${dev#*:}} ${val}%"
-done < "$conf"
+done <<EOF
+$preset_devices
+EOF
 wait   # block until all the background brightness calls have finished
 
 # Nothing matched: the preset exists but none of its devices are present here.
