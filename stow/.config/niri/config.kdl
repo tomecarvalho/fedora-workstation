@@ -105,7 +105,6 @@ layout {
     // Alternatively, you can override it with a window rule called
     // `draw-border-with-background`.
     border {
-        off
         width 4
         active-color   "#707070"      // Neutral gray
         inactive-color "#d0d0d0"      // Light gray

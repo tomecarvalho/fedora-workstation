@@ -25,8 +25,8 @@ binds {
     Alt+F4 repeat=false { close-window; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
-    Mod+Ctrl+F { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+D { toggle-window-floating; }
+    Mod+Shift+D { switch-focus-between-floating-and-tiling; }
     Mod+W { toggle-column-tabbed-display; }
     Mod+A repeat=false { toggle-overview; }
     Mod+BracketLeft { consume-or-expel-window-left; }
@@ -49,8 +49,8 @@ binds {
     Mod+L { focus-column-right; }
     Mod+J { focus-window-down; }
     Mod+K { focus-window-up; }
-    Mod+Home { focus-column-first; }
-    Mod+End { focus-column-last; }
+    Mod+Alt+H { focus-column-first; }
+    Mod+Alt+L { focus-column-last; }
     Mod+Ctrl+H { focus-monitor-left; }
     Mod+Ctrl+J { focus-monitor-down; }
     Mod+Ctrl+K { focus-monitor-up; }
@@ -61,8 +61,8 @@ binds {
     Mod+Shift+L { move-column-right; }
     Mod+Shift+J { move-window-down; }
     Mod+Shift+K { move-window-up; }
-    Mod+Ctrl+Home { move-column-to-first; }
-    Mod+Ctrl+End { move-column-to-last; }
+    Mod+Alt+Ctrl+H { move-column-to-first; }
+    Mod+Alt+Ctrl+L { move-column-to-last; }
     Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
     Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
@@ -140,7 +140,6 @@ binds {
     XF86AudioNext allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "next"; }
     XF86AudioPrev allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "previous"; }
     Mod+Slash hotkey-overlay-title="Media: Play/Pause" repeat=false { spawn "dms" "ipc" "call" "mpris" "playPause"; }
-    Mod+Alt+Space hotkey-overlay-title="Media: Play/Pause" repeat=false { spawn "dms" "ipc" "call" "mpris" "playPause"; }
     Mod+Left hotkey-overlay-title="Media: Previous" repeat=false { spawn "dms" "ipc" "call" "mpris" "previous"; }
     Mod+Right hotkey-overlay-title="Media: Next" repeat=false { spawn "dms" "ipc" "call" "mpris" "next"; }
     Ctrl+XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "increment" "3"; }

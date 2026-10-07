@@ -13,11 +13,13 @@
   "matugenTargetMonitor": "eDP-1",
   "widgetBackgroundColor": "sth",
   "cornerRadius": 12,
+  "niriLayoutBorderSize": 1,
   "touchpadAccelProfile": "adaptive",
   "touchpadAccelSpeed": 0.4,
   "keyboardLayouts": "us_pt",
   "keyboardNumlock": true,
   "barElevationEnabled": false,
+  "blurEnabled": true,
   "controlCenterShowMicPercent": true,
   "controlCenterWidgets": [
     {
@@ -310,7 +312,7 @@
       ],
       "spacing": 0,
       "innerPadding": 0,
-      "barInsetPadding": 4,
+      "barInsetPadding": 0,
       "barLengthPadding": 0,
       "bottomGap": 0,
       "attachToScreenEdge": false,

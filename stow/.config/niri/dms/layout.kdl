@@ -7,11 +7,11 @@ layout {
     gaps 4
 
     border {
-        width 2
+        width 1
     }
 
     focus-ring {
-        width 2
+        width 1
     }
 }
 
@@ -20,19 +20,6 @@ window-rule {
     clip-to-geometry true
     tiled-state true
     draw-border-with-background false
-}
-
-layer-rule {
-    background-effect {
-        xray false
-    }
-}
-
-window-rule {
-    match app-id="^com.danklinux.dms$"
-    background-effect {
-        xray false
-    }
 }
 
 // bar-xray off
