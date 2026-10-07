@@ -2,10 +2,12 @@
   "editor.formatOnSave": true,
   "cSpell.words": [
     "bitwarden",
-    "stremio",
-    "mijorus",
     "gearlever",
+    "localsend",
+    "mijorus",
+    "niri",
     "obsproject",
-    "localsend"
+    "stremio",
+    "todesktop"
   ]
 }

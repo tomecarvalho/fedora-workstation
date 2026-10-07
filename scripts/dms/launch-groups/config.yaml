@@ -1,7 +1,13 @@
 # Output names come from `niri msg -j outputs`.
 
+# Icon names are available under /usr/share/icons and ~/.local/share/icons.
+# List them with: find /usr/share/icons ~/.local/share/icons -type f
+# (remove the file extension when using a themed icon name).
+
 groups:
   work:
+    label: Work
+    icon: applications-office
     displays:
       "HDMI-A-1+eDP-1":
         - app_id: '^org\.mozilla\.firefox$'
