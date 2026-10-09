@@ -2,6 +2,10 @@
   "editor.formatOnSave": true,
   "cSpell.words": [
     "bitwarden",
+    "Btrfs",
+    "dconf",
+    "flatpaks",
+    "fpst",
     "gearlever",
     "ghostty",
     "infocmp",
@@ -10,6 +14,7 @@
     "niri",
     "obsproject",
     "stremio",
-    "todesktop"
+    "todesktop",
+    "urldecode"
   ]
 }

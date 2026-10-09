@@ -23,6 +23,7 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
 | [install](scripts/install.sh)                                | General installation script. Supports step parameter to run specific steps in isolation.       |
 | [install-work](scripts/install-work.sh)                      | Work-specific installation script. Supports step parameter to run specific steps in isolation. |
+| [update](scripts/update.sh)                                  | Creates a Snapper Btrfs snapshot, then updates DNF packages, Flatpaks, and Snaps.                |
 | [backup-home](scripts/backup/backup-home.sh)                 | Backup select directories and files from the home directory.                                   |
 | [backup-projects](scripts/backup/backup-projects.sh)         | Backup a project directory, excluding package manager caches and dependencies.                 |
 | [sync-local](scripts/backup/sync-local.sh)                   | Sync the same home/project paths to another local-network machine over SSH (sender wins).      |
@@ -31,6 +32,10 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [default-boot-windows](scripts/grub/default-boot-windows.sh) | Sets Windows Boot Manager as the default GRUB entry when detected.                             |
 | [nvidia-drivers](scripts/nvidia-drivers.sh)                  | Helps set up NVIDIA GPU drivers.                                                               |
 | [secure-boot-key](scripts/secure-boot-key.sh)                | Helps with Secure Boot key setup.                                                              |
+| [ghostty-terminfo](scripts/ghostty/terminfo.sh)              | Installs the Ghostty terminfo entry on a remote host.                                          |
+| [files-copy](scripts/files/copy.sh)                          | Copies files to the Wayland clipboard.                                                         |
+| [files-cut](scripts/files/cut.sh)                            | Cuts files to the Wayland clipboard.                                                           |
+| [files-paste](scripts/files/paste.sh)                        | Pastes files from the Wayland clipboard into a directory.                                      |
 | [core](scripts/utils/core.sh)                                | Core utility helpers shared by shell scripts.                                                  |
 | [git](scripts/utils/git.sh)                                  | Git-specific utility helpers shared by shell scripts.                                          |
 | [packages](scripts/utils/packages.sh)                        | Package list utility helpers.                                                                  |

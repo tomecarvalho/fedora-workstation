@@ -9,8 +9,10 @@ BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 # Copy text to the clipboard (Wayland).
 alias cb="wl-copy"
 
-# Update system packages, flatpaks, and snaps.
-alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"
+# Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
+update() {
+  "$SCRIPTS_PATH/update.sh" "$@"
+}
 
 # Start a nested GNOME Shell instance for extension development.
 alias gsdw="dbus-run-session gnome-shell --devkit --wayland"
@@ -64,121 +66,20 @@ keep_awake() {
 
 # Install the Ghostty terminfo entry on a remote host.
 ghostty_terminfo() {
-  if [ $# -lt 1 ]; then
-    echo "Usage: ghostty_terminfo <host>" >&2
-    return 1
-  fi
-
-  infocmp -x xterm-ghostty | ssh "$1" -- tic -x -
+  "$SCRIPTS_PATH/ghostty/terminfo.sh" "$@"
 }
 
 # Copy files to the clipboard (Wayland).
 fcp() {
-  # No arguments provided: show usage.
-  if [ $# -eq 0 ]; then
-    echo "Usage: wl-copyfile <file1> [file2] ..." >&2
-    return 1
-  fi
-
-  _uris=""
-  for _file in "$@"; do
-    if [ -e "$_file" ]; then
-      # Append the URI with a literal newline using standard POSIX formatting
-      _uris="${_uris}file://$(realpath "$_file")
-"
-    else
-      echo "Warning: '$_file' does not exist, skipping." >&2
-    fi
-  done
-
-  # Strip the very last trailing newline and pipe to wl-copy
-  printf "%s" "${_uris%?}" | wl-copy --type text/uri-list
-  
-  # Clean up the global variables to avoid polluting the shell environment
-  unset _uris _file
+  "$SCRIPTS_PATH/files/copy.sh" "$@"
 }
 
 # Cut files to the Wayland clipboard (paste with fpst, which moves them).
 fct() {
-  # No arguments provided: show usage.
-  if [ $# -eq 0 ]; then
-    echo "Usage: fct <file1> [file2] ..." >&2
-    return 1
-  fi
-
-  _uris="cut"
-  _n=0
-  for _file in "$@"; do
-    if [ -e "$_file" ]; then
-      _uris="${_uris}
-file://$(realpath "$_file")"
-      _n=$((_n + 1))
-    else
-      echo "Warning: '$_file' does not exist, skipping." >&2
-    fi
-  done
-
-  if [ "$_n" -eq 0 ]; then
-    unset _uris _file _n
-    return 1
-  fi
-
-  printf "%s" "$_uris" | wl-copy --type x-special/gnome-copied-files
-  unset _uris _file _n
+  "$SCRIPTS_PATH/files/cut.sh" "$@"
 }
 
 # Paste files from the clipboard into a directory (default: .) (Wayland).
 fpst() {
-  _dest=${1:-.}
-  if [ ! -d "$_dest" ]; then
-    echo "fpst: '$_dest' is not a directory" >&2
-    return 1
-  fi
-
-  # Prefer the standard uri-list; fall back to GNOME/Nautilus's format
-  # ("copy"/"cut" on the first line, then URIs).
-  _list=$(wl-paste --no-newline --type text/uri-list 2>/dev/null) ||
-  _list=$(wl-paste --no-newline --type x-special/gnome-copied-files 2>/dev/null) || {
-    echo "fpst: no files on the clipboard" >&2
-    return 1
-  }
-
-  printf '%s\n' "$_list" | tr -d '\r' | while IFS= read -r _line; do
-    case $_line in
-      file://*) ;;
-      *) continue ;;   # skip comments, "copy"/"cut" markers, blanks
-    esac
-    _path=$(_fpst_urldecode "${_line#file://}")
-    if [ -e "$_path" ]; then
-      cp -Rp -- "$_path" "$_dest"/
-    else
-      echo "Warning: '$_path' does not exist, skipping." >&2
-    fi
-  done
-
-  unset _dest _list
-}
-
-# Decode %XX sequences in a URI path.
-_fpst_urldecode() {
-  _s=$1
-  _out=
-  while [ -n "$_s" ]; do
-    case $_s in
-      %[0-9A-Fa-f][0-9A-Fa-f]*)
-        _h=${_s#%}
-        _h=${_h%"${_h#??}"} # First two hex digits
-        # shellcheck disable=SC2059
-        _out="$_out$(printf "\\$(printf '%03o' "0x$_h")")"
-        _s=${_s#???}
-        ;;
-      *)
-        _c=${_s%"${_s#?}"} # First character
-        _out="$_out$_c"
-        _s=${_s#?}
-        ;;
-    esac
-  done
-  printf '%s' "$_out"
-  unset _s _out _h _c
+  "$SCRIPTS_PATH/files/paste.sh" "$@"
 }
