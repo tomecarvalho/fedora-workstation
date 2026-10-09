@@ -62,6 +62,16 @@ keep_awake() {
   "$SCRIPTS_PATH/keep-awake.sh" "$@"
 }
 
+# Install the Ghostty terminfo entry on a remote host.
+ghostty_terminfo() {
+  if [ $# -lt 1 ]; then
+    echo "Usage: ghostty_terminfo <host>" >&2
+    return 1
+  fi
+
+  infocmp -x xterm-ghostty | ssh "$1" -- tic -x -
+}
+
 # Copy files to the clipboard (Wayland).
 fcp() {
   # No arguments provided: show usage.
