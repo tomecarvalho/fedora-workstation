@@ -54,38 +54,7 @@
       "width": 50
     },
     {
-      "id": "volumeSlider",
-      "enabled": true,
-      "width": 50
-    },
-    {
       "id": "audioInput",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "inputVolumeSlider",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "darkMode",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "brightnessSlider",
-      "enabled": true,
-      "width": 50,
-      "deviceName": "backlight:intel_backlight"
-    },
-    {
-      "id": "idleInhibitor",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "doNotDisturb",
       "enabled": true,
       "width": 50
     },
@@ -101,6 +70,17 @@
       "id": "battery",
       "enabled": true,
       "width": 50
+    },
+    {
+      "id": "darkMode",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "brightnessSlider",
+      "enabled": true,
+      "width": 50,
+      "deviceName": "backlight:intel_backlight"
     }
   ],
   "showWorkspaceIndex": true,
