@@ -11,4 +11,5 @@ niri
 qt5ct
 qt6-multimedia
 qt6ct
+yazi
 yq
