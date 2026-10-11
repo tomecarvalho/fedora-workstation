@@ -17,6 +17,7 @@
   "floatingWindowForegroundTransparency": 0.5,
   "widgetBackgroundColor": "sth",
   "cornerRadius": 12,
+  "niriLayoutGapsOverride": 1,
   "niriLayoutBorderSize": 1,
   "touchpadAccelProfile": "adaptive",
   "touchpadAccelSpeed": 0.4,
