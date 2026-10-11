@@ -2,7 +2,7 @@ layout {
     // Centre single column
     always-center-single-column true
 
-    // Make tab indicator visible
+    // Tabbed windows: make indicator visible
     tab-indicator {
         position "top"
         place-within-column

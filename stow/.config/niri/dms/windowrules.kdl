@@ -48,3 +48,11 @@ window-rule {
     match app-id="^com.danklinux.dms$"
     open-floating true
 }
+
+// @id=wr_1791714557085680645 @name=Ghostty
+window-rule {
+    match app-id="^com.mitchellh.ghostty$"
+    background-effect {
+        blur true
+    }
+}
