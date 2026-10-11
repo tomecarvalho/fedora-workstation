@@ -11,6 +11,9 @@
     }
   },
   "matugenTargetMonitor": "eDP-1",
+  "popupTransparency": 0.9,
+  "floatingWindowTransparency": 0.9,
+  "floatingWindowForegroundTransparency": 0.5,
   "widgetBackgroundColor": "sth",
   "cornerRadius": 12,
   "niriLayoutBorderSize": 1,
@@ -20,6 +23,7 @@
   "keyboardNumlock": true,
   "barElevationEnabled": false,
   "blurEnabled": true,
+  "foregroundLayerTransparency": 0.5,
   "controlCenterShowMicPercent": true,
   "controlCenterWidgets": [
     {
@@ -561,7 +565,20 @@
   "launcherPluginVisibility": {
     "dms_qr_generator": {
       "allowWithoutTrigger": false
+    },
+    "dms_power": {
+      "allowWithoutTrigger": true
     }
   },
+  "launcherPluginOrder": [
+    "dms_power",
+    "dms_qr_generator",
+    "dms_settings_search",
+    "dms_clipboard_search",
+    "calculator",
+    "emojiLauncher",
+    "webSearch",
+    "niriWindows"
+  ],
   "configVersion": 18
 }
