@@ -546,6 +546,9 @@
     },
     "dms_power": {
       "allowWithoutTrigger": true
+    },
+    "dms_settings_search": {
+      "allowWithoutTrigger": true
     }
   },
   "launcherPluginOrder": [
