@@ -9,16 +9,19 @@ BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 # Copy text to the clipboard (Wayland).
 alias cb="wl-copy"
 
-# Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
-update() {
-  "$SCRIPTS_PATH/update.sh" "$@"
-}
-
 # Start a nested GNOME Shell instance for extension development.
 alias gsdw="dbus-run-session gnome-shell --devkit --wayland"
 
 # Keep awake shorthand.
 alias ka="keep_awake"
+
+# Format staged git files with Prettier
+alias prettier-staged="git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 npx prettier --write --ignore-unknown"
+
+# Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
+update() {
+  "$SCRIPTS_PATH/update.sh" "$@"
+}
 
 # Update versioned dconf config.
 dconf_pull() {

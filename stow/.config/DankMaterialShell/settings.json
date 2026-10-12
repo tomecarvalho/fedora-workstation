@@ -261,11 +261,7 @@
           "trayMaxVisibleItems": 0,
           "trayPopupSingleLine": true,
           "trayAutoOverflow": true,
-          "trayIconSpacing": 0
-        },
-        {
-          "id": "ddcBrightness",
-          "enabled": true
+          "trayIconSpacing": 4
         },
         {
           "id": "controlCenterButton",

@@ -1,13 +1,16 @@
 {
   "editor.formatOnSave": true,
   "cSpell.words": [
+    "ACMR",
     "bitwarden",
     "Btrfs",
     "dconf",
+    "devkit",
     "flatpaks",
     "fpst",
     "gearlever",
     "ghostty",
+    "gsdw",
     "infocmp",
     "localsend",
     "mijorus",
