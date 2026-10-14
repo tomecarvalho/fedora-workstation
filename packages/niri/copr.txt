@@ -1,2 +1,3 @@
 avengemedia/dms
+dejan/lazygit
 lihaohong/yazi
