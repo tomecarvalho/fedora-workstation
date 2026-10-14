@@ -4,6 +4,7 @@
     "ACMR",
     "bitwarden",
     "Btrfs",
+    "dankcolors",
     "dconf",
     "devkit",
     "flatpaks",
@@ -12,11 +13,13 @@
     "ghostty",
     "gsdw",
     "infocmp",
+    "keybind",
     "localsend",
     "mijorus",
     "niri",
     "obsproject",
     "stremio",
+    "titlebar",
     "todesktop",
     "urldecode"
   ]
