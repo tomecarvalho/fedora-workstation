@@ -18,6 +18,9 @@ alias ka="keep_awake"
 # Format staged git files with Prettier
 alias prettier-staged="git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 npx prettier --write --ignore-unknown"
 
+# Neovim shorthand
+alias v="nvim"
+
 # Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
 update() {
   "$SCRIPTS_PATH/update.sh" "$@"

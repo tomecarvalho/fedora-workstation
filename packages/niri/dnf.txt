@@ -9,7 +9,9 @@ i2c-tools
 kdeconnectd
 lazygit
 matugen
+neovim
 niri
+python3-neovim
 qt5ct
 qt6-multimedia
 qt6ct
