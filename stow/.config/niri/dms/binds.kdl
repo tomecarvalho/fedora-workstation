@@ -95,6 +95,10 @@ binds {
     Mod+Ctrl+I { move-column-to-workspace-down; }
     Mod+Shift+U { move-workspace-up; }
     Mod+Shift+I { move-workspace-down; }
+    Mod+Alt+Shift+H { move-workspace-to-monitor-left; }
+    Mod+Alt+Shift+J { move-workspace-to-monitor-down; }
+    Mod+Alt+Shift+K { move-workspace-to-monitor-up; }
+    Mod+Alt+Shift+L { move-workspace-to-monitor-right; }
 
     // Mouse Wheel
     Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
