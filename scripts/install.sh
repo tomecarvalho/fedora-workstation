@@ -413,13 +413,21 @@ us_pt_keyboard_layout() {
 }
 
 docker() {
-  echo "[docker] Install Docker Engine and configure user permissions"
+  echo "[docker] Install Docker Engine, configure user permissions and set up socket"
 
+  # Install Docker engine
   sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
   sudo dnf in -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+  # Start Docker service
   sudo systemctl start docker
+
+  # Allow user to run Docker without sudo
   sudo groupadd docker
-  sudo usermod -aG docker $USER
+  sudo usermod -aG docker "$USER"
+
+  # Set up socket
+  sudo systemctl enable --now docker.socket
 }
 
 snapper() {
