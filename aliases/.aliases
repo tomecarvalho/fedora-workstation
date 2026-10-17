@@ -70,11 +70,6 @@ keep_awake() {
   "$SCRIPTS_PATH/keep-awake.sh" "$@"
 }
 
-# Install the Ghostty terminfo entry on a remote host.
-ghostty_terminfo() {
-  "$SCRIPTS_PATH/ghostty/terminfo.sh" "$@"
-}
-
 # Copy files to the clipboard (Wayland).
 fcp() {
   "$SCRIPTS_PATH/files/copy.sh" "$@"
