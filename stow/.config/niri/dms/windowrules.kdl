@@ -57,3 +57,9 @@ window-rule {
         xray false
     }
 }
+
+// @id=wr_1792248041519876757 @name=Neovim
+window-rule {
+    match app-id="^nvim$"
+    open-maximized true
+}

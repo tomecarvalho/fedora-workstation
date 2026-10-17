@@ -5,6 +5,7 @@
     "ACMR",
     "addrepo",
     "adwaita",
+    "alttab",
     "avengemedia",
     "bitwarden",
     "Btrfs",
@@ -26,6 +27,7 @@
     "Matugen",
     "mijorus",
     "niri",
+    "numlock",
     "nvim",
     "obsproject",
     "rebelot",
@@ -34,6 +36,7 @@
     "titlebar",
     "todesktop",
     "urldecode",
+    "windowrules",
     "yazi"
   ]
 }

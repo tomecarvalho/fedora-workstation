@@ -2,10 +2,12 @@ binds {
     // Applications
     Mod+Return hotkey-overlay-title="Open Terminal (Kitty)" { spawn "kitty"; }
     Mod+B hotkey-overlay-title="Open Browser (Firefox)" { spawn "firefox"; }
-    Mod+Ctrl+B hotkey-overlay-title="Open Browser (Firefox) - Private Window" { spawn "firefox" "--private-window"; }
-    Mod+E hotkey-overlay-title="Open Explorer (Nautilus)" { spawn "nautilus" "--new-window"; }
-    Mod+T hotkey-overlay-title="Editor (Visual Studio Code)" { spawn "code"; }
-    Mod+Ctrl+T hotkey-overlay-title="Editor (Cursor)" { spawn "cursor"; }
+    Mod+Shift+B hotkey-overlay-title="Open Browser (Firefox) - Private Window" { spawn "firefox" "--private-window"; }
+    Mod+E hotkey-overlay-title="Open File Manager (Yazi)" { spawn "kitty" "--class" "yazi" "-e" "yazi"; }
+    Mod+Shift+E hotkey-overlay-title="Open File Manager (Nautilus)" { spawn "nautilus" "--new-window"; }
+    Mod+T hotkey-overlay-title="Open Editor (Neovim)" { spawn "kitty" "--class" "nvim" "-e" "nvim"; }
+    Mod+Shift+T hotkey-overlay-title="Open GUI Editor (Visual Studio Code)" { spawn "code"; }
+    Mod+Ctrl+T hotkey-overlay-title="Open GUI Editor (Cursor)" { spawn "cursor"; }
 
     // Launchers & Shell Panels
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
