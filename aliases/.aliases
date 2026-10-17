@@ -15,11 +15,16 @@ alias gsdw="dbus-run-session gnome-shell --devkit --wayland"
 # Keep awake shorthand.
 alias ka="keep_awake"
 
-# Format staged git files with Prettier
+# Format staged git files with Prettier.
 alias prettier-staged="git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 npx prettier --write --ignore-unknown"
 
 # Neovim shorthand
 alias v="nvim"
+
+# ssh kitten wrapper
+alias kssh="kitten ssh"
+# Replaces ssh if the terminal is Kitty and the kitten command is available.
+[ "$TERM" = xterm-kitty ] && command -v kitten >/dev/null && alias ssh="kitten ssh"
 
 # Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
 update() {
