@@ -35,14 +35,20 @@ binds {
     // Window & Column Sizing
     Mod+R { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R { reset-window-height; }
     Mod+G { expand-column-to-available-width; }
+    Mod+Shift+G { reset-window-height; }
     Mod+C { center-column; }
     Mod+Ctrl+C { center-visible-columns; }
     Mod+Minus { set-column-width "-10%"; }
     Mod+Equal { set-column-width "+10%"; }
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
+    // Z: Instant width presets
+    Mod+Z { set-column-width "50%"; }
+    Mod+Shift+Z { set-column-width "33.3333%"; }
+    Mod+Ctrl+Z { set-column-width "66.6667%"; }
+    Mod+Alt+Z { set-column-width "25%"; }
+    Mod+Shift+Alt+Z { set-column-width "75%"; }
 
     // Focus Navigation
     Mod+H { focus-column-left; }
