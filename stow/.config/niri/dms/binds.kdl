@@ -10,7 +10,7 @@ binds {
     // Launchers & Shell Panels
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Alt+Space hotkey-overlay-title="Spotlight Bar" { spawn "dms" "ipc" "call" "spotlight-bar" "toggle"; }
-    Mod+S hotkey-overlay-title="Control Center" { spawn "dms" "ipc" "call" "control-center" "toggle"; }
+    Mod+S hotkey-overlay-title="Control Centre" { spawn "dms" "ipc" "call" "control-center" "toggle"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
     Mod+Period hotkey-overlay-title="Notepad" { spawn "dms" "ipc" "call" "notepad" "toggle"; }
     Mod+O hotkey-overlay-title="Dash: Overview" { spawn "dms" "ipc" "call" "dash" "toggle" "overview"; }
@@ -43,12 +43,19 @@ binds {
     Mod+Equal { set-column-width "+10%"; }
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
-    // Z: Instant width presets
+    // Instant column width presets
     Mod+Z { set-column-width "50%"; }
     Mod+Shift+Z { set-column-width "33.3333%"; }
     Mod+Ctrl+Z { set-column-width "66.6667%"; }
     Mod+Alt+Z { set-column-width "25%"; }
     Mod+Shift+Alt+Z { set-column-width "75%"; }
+
+    // Column split presets
+    Mod+X hotkey-overlay-title="Split: 1/2 + 1/2" { spawn "sh" "-c" "niri msg action set-column-width 50% && niri msg action focus-column-right && niri msg action set-column-width 50% && niri msg action focus-column-left"; }
+    Mod+Shift+X hotkey-overlay-title="Split: 2/3 + 1/3" { spawn "sh" "-c" "niri msg action set-column-width 66.6667% && niri msg action focus-column-right && niri msg action set-column-width 33.3333% && niri msg action focus-column-left"; }
+    Mod+Shift+Alt+X hotkey-overlay-title="Split: 1/3 + 2/3" { spawn "sh" "-c" "niri msg action set-column-width 33.3333% && niri msg action focus-column-right && niri msg action set-column-width 66.6667% && niri msg action focus-column-left"; }
+    Mod+Ctrl+X hotkey-overlay-title="Split: 3/4 + 1/4" { spawn "sh" "-c" "niri msg action set-column-width 75% && niri msg action focus-column-right && niri msg action set-column-width 25% && niri msg action focus-column-left"; }
+    Mod+Ctrl+Alt+X hotkey-overlay-title="Split: 1/4 + 3/4" { spawn "sh" "-c" "niri msg action set-column-width 25% && niri msg action focus-column-right && niri msg action set-column-width 75% && niri msg action focus-column-left"; }
 
     // Focus Navigation
     Mod+H { focus-column-left; }
