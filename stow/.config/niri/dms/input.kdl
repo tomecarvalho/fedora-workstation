@@ -9,8 +9,7 @@ input {
     }
     touchpad {
         tap
-        accel-speed 0.4
-        accel-profile "adaptive"
+        accel-speed 0.0
         natural-scroll
         dwt
     }
@@ -21,4 +20,3 @@ input {
         numlock
     }
 }
-

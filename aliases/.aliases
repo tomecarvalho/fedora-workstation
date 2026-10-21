@@ -23,8 +23,6 @@ alias v="nvim"
 
 # ssh kitten wrapper
 alias kssh="kitten ssh"
-# Replaces ssh if the terminal is Kitty and the kitten command is available.
-[ "$TERM" = xterm-kitty ] && command -v kitten >/dev/null && alias ssh="kitten ssh"
 
 # Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
 update() {

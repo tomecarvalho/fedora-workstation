@@ -4,7 +4,7 @@
 // ! PLACE YOUR CUSTOM CONFIGURATION ELSEWHERE !
 
 layout {
-    gaps 1
+    gaps 2
 
     border {
         width 1
@@ -16,7 +16,7 @@ layout {
 }
 
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 16
     clip-to-geometry true
     tiled-state true
     draw-border-with-background false
@@ -29,7 +29,7 @@ layer-rule {
 }
 
 window-rule {
-    match app-id="^com.danklinux.dms$"
+    match app-id="^(dev.duxlabs.shell|com.danklinux.dms)$"
     background-effect {
         xray false
     }
