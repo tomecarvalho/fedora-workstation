@@ -15,6 +15,7 @@ gcolor3
 git
 gnome-extensions-app
 gnome-tweaks
+ibm-plex-sans-fonts
 jellyfin
 libgda 
 libgda-sqlite
@@ -24,7 +25,6 @@ libreoffice-writer
 mutter-devel
 mutter-devkit
 python3-virtualenv
-yq
 qbittorrent
 ripgrep
 seahorse
@@ -34,6 +34,7 @@ stow
 thunderbird
 webapp-manager
 ydotool
+yq
 zoxide
 zsh
 zsh-syntax-highlighting
