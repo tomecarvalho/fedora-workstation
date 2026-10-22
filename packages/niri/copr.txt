@@ -1,3 +1,5 @@
 avengemedia/dms
 dejan/lazygit
+dgop
+dux-files
 lihaohong/yazi

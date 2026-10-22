@@ -1,10 +1,10 @@
 accountsservice
-btop
 cava
 dankcalendar
 dgop
 dms
 dsearch
+dux-files
 i2c-tools
 kdeconnectd
 lazygit
