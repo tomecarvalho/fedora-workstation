@@ -487,6 +487,7 @@ set_fonts() {
   ibm_plex)
     monospace_font="Blex Mono Nerd Font"
     sans_serif_font="IBM Plex Sans"
+    serif_font="IBM Plex Serif"
     ;;
   *)
     echo "Usage: set_fonts {ibm_plex}" >&2
@@ -524,10 +525,24 @@ EOF
 </fontconfig>
 EOF
 
+  cat >"$config_dir/99-serif.conf" <<EOF
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <alias>
+    <family>serif</family>
+    <prefer>
+      <family>$serif_font</family>
+    </prefer>
+  </alias>
+</fontconfig>
+EOF
+
   sudo fc-cache -fv
 
   echo "$prefix Set monospace to $monospace_font"
   echo "$prefix Set sans-serif to $sans_serif_font"
+  echo "$prefix Set serif to $serif_font"
 }
 
 set_fonts_ibm_plex() { set_fonts ibm_plex; }
