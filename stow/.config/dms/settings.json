@@ -723,7 +723,19 @@
       "allowWithoutTrigger": true
     },
     "dms_settings_search": {
+      "allowWithoutTrigger": false
+    },
+    "dms_clipboard_search": {
+      "allowWithoutTrigger": false
+    },
+    "emojiLauncher": {
+      "allowWithoutTrigger": false
+    },
+    "webSearch": {
       "allowWithoutTrigger": true
+    },
+    "niriWindows": {
+      "allowWithoutTrigger": false
     }
   },
   "launcherPluginOrder": [
@@ -731,6 +743,7 @@
     "dms_qr_generator",
     "dms_settings_search",
     "dms_clipboard_search",
+    "dms_vpn",
     "calculator",
     "emojiLauncher",
     "webSearch",

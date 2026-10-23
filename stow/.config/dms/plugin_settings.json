@@ -17,7 +17,33 @@
   "webSearch": {
     "enabled": true,
     "searchEngines": [],
-    "disabledEngines": []
+    "disabledEngines": [
+      "duckduckgo",
+      "brave",
+      "bing",
+      "kagi",
+      "youtube",
+      "github",
+      "stackoverflow",
+      "reddit",
+      "wikipedia",
+      "amazon",
+      "ebay",
+      "maps",
+      "images",
+      "twitter",
+      "linkedin",
+      "imdb",
+      "archlinux",
+      "aur",
+      "nixpkgs",
+      "nixopts",
+      "npmjs",
+      "pypi",
+      "crates",
+      "mdn",
+      "translate"
+    ]
   },
   "niriWindows": {
     "enabled": true
