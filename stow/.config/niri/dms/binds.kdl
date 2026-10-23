@@ -1,14 +1,16 @@
 binds {
     // Applications
-    Mod+Return hotkey-overlay-title="Open Terminal (Kitty)" { spawn "kitty"; }
-    Mod+B hotkey-overlay-title="Open Browser (Firefox)" { spawn "firefox"; }
-    Mod+Shift+B hotkey-overlay-title="Open Browser (Firefox) - Private Window" { spawn "firefox" "--private-window"; }
-    Mod+E hotkey-overlay-title="Open File Manager (Yazi)" { spawn "kitty" "--class" "yazi" "-e" "yazi"; }
-    Mod+Shift+E hotkey-overlay-title="Open File Manager (Nautilus)" { spawn "nautilus" "--new-window"; }
-    Mod+T hotkey-overlay-title="Open Editor (Neovim)" { spawn "kitty" "--class" "nvim" "-e" "nvim"; }
-    Mod+Shift+T hotkey-overlay-title="Open GUI Editor (Zed)" { spawn "zed"; }
-    Mod+Ctrl+T hotkey-overlay-title="Open GUI Editor (Cursor)" { spawn "cursor"; }
-    Mod+Alt+T hotkey-overlay-title="Open GUI Editor (VS Code)" { spawn "code"; }
+    Mod+Return hotkey-overlay-title="Terminal (Kitty)" { spawn "kitty"; }
+    Mod+B hotkey-overlay-title="Browser (Firefox)" { spawn "firefox"; }
+    Mod+Shift+B hotkey-overlay-title="Browser (Firefox) - Private Window" { spawn "firefox" "--private-window"; }
+    Mod+E hotkey-overlay-title="File Manager (Yazi)" { spawn "kitty" "--class" "yazi" "-e" "yazi"; }
+    Mod+Shift+E hotkey-overlay-title="GUI File Manager (Nautilus)" { spawn "nautilus" "--new-window"; }
+    Mod+T hotkey-overlay-title="Editor (Neovim)" { spawn "kitty" "--class" "nvim" "-e" "nvim"; }
+    Mod+Shift+T hotkey-overlay-title="GUI Editor (Zed)" { spawn "zed"; }
+    Mod+Ctrl+T hotkey-overlay-title="GUI Editor (Cursor)" { spawn "cursor"; }
+    Mod+Alt+T hotkey-overlay-title="GUI Editor (VS Code)" { spawn "code"; }
+    Mod+M hotkey-overlay-title="System Monitor (dgop)" { spawn "kitty" "--class" "dgop" "-e" "dgop"; }
+    Mod+Shift+M hotkey-overlay-title="GUI Sytem Monitor" { spawn "dms" "ipc" "call" "processlist" "focusOrToggle"; }
 
     // Launchers & Shell Panels
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
@@ -19,7 +21,6 @@ binds {
     Mod+O hotkey-overlay-title="Dash: Overview" { spawn "dms" "ipc" "call" "dash" "toggle" "overview"; }
     Mod+Shift+O hotkey-overlay-title="Dash: Media" { spawn "dms" "ipc" "call" "dash" "toggle" "media"; }
     Mod+Ctrl+O hotkey-overlay-title="Dash: Weather" { spawn "dms" "ipc" "call" "dash" "toggle" "weather"; }
-    Ctrl+Shift+Escape hotkey-overlay-title="Task Manager" { spawn "dms" "ipc" "call" "processlist" "focusOrToggle"; }
     Mod+Shift+W hotkey-overlay-title="Create window rule" { spawn "dms" "ipc" "call" "window-rules" "toggle"; }
     Mod+Alt+Slash { show-hotkey-overlay; }
 
