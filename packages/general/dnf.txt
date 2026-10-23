@@ -24,6 +24,7 @@ libreoffice-impress
 libreoffice-writer
 mutter-devel
 mutter-devkit
+ncdu
 python3-virtualenv
 qbittorrent
 ripgrep
