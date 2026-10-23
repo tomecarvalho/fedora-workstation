@@ -43,9 +43,9 @@ overview {
 }
 
 environment {
-  EDITOR "nvim"
-  TERMINAL "kitty"
-  XDG_CURRENT_DESKTOP "niri"
+    EDITOR "nvim"
+    TERMINAL "kitty"
+    XDG_CURRENT_DESKTOP "niri"
 }
 
 hotkey-overlay {

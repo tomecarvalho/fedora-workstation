@@ -6,8 +6,9 @@ binds {
     Mod+E hotkey-overlay-title="Open File Manager (Yazi)" { spawn "kitty" "--class" "yazi" "-e" "yazi"; }
     Mod+Shift+E hotkey-overlay-title="Open File Manager (Nautilus)" { spawn "nautilus" "--new-window"; }
     Mod+T hotkey-overlay-title="Open Editor (Neovim)" { spawn "kitty" "--class" "nvim" "-e" "nvim"; }
-    Mod+Shift+T hotkey-overlay-title="Open GUI Editor (Visual Studio Code)" { spawn "code"; }
+    Mod+Shift+T hotkey-overlay-title="Open GUI Editor (Zed)" { spawn "zed"; }
     Mod+Ctrl+T hotkey-overlay-title="Open GUI Editor (Cursor)" { spawn "cursor"; }
+    Mod+Alt+T hotkey-overlay-title="Open GUI Editor (VS Code)" { spawn "code"; }
 
     // Launchers & Shell Panels
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
