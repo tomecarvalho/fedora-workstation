@@ -31,6 +31,7 @@ ALL_STEPS=(
   us_pt_keyboard_layout
   gnome_extensions
   vscode
+  zed
   node
   oh_my_zsh
   oh_my_zsh_plugins
@@ -320,6 +321,20 @@ vscode() {
   echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
   echo "[vscode] Install VS Code"
   sudo dnf in -y code
+}
+
+zed() {
+  local prefix="[zed]"
+
+  if command -v zed &>/dev/null; then
+    echo "$prefix Zed is already installed"
+    return
+  fi
+
+  echo "$prefix Install Zed through its installation script"
+
+  # https://zed.dev/docs/installation
+  curl -fsSL https://zed.dev/install.sh | sh
 }
 
 oh_my_zsh() {

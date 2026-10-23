@@ -21,7 +21,7 @@ source "$SCRIPT_DIR/utils/packages.sh"
 
 copr() {
   echo "[copr] Enable COPR repositories"
-  
+
   local copr_file="$PKGS_DIR/copr.txt"
   local repos=($(util_read_package_list "$copr_file"))
 
@@ -69,7 +69,7 @@ enabled=1
 gpgcheck=1
 gpgkey=https://downloads.cursor.com/keys/anysphere.asc
 EOF
-  
+
   echo "[cursor] Install Cursor"
   sudo dnf in -y cursor
 }

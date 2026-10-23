@@ -64,6 +64,18 @@ window-rule {
     open-maximized true
 }
 
+// @id=wr_1792776577244679674 @name=dev.zed.Zed
+window-rule {
+    match app-id="^dev.zed.Zed$" title="^Zed — Settings$"
+    open-floating true
+}
+
+// @id=wr_1792783545900151749 @name=dev.zed.Zed
+window-rule {
+    match app-id="^dev.zed.Zed$"
+    open-maximized true
+}
+
 // @id=dms-window-opaque @name=DMS Window Opaque
 window-rule {
     match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
