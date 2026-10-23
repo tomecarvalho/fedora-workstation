@@ -4,7 +4,7 @@ OH_MY_ZSH_INSTALL_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/
 NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh"
 US_PT_KEYBOARD_LAYOUT_GITHUB_SUFFIX="tomecarvalho/us-pt-keyboard-layout.git"
 
-ADWAITA_MONO_NERD_FONT_URL=https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/AdwaitaMono.zip
+BLEX_MONO_NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/IBMPlexMono.zip"
 
 VIDEOS_DIR="$HOME/Videos"
 SHOWS_DIR="$VIDEOS_DIR/shows"
@@ -38,8 +38,8 @@ ALL_STEPS=(
   docker
   snapper
   aliases
-  adwaita_mono_nerd_font
-  set_fonts_adwaita
+  blex_mono_nerd_font
+  set_fonts_ibm_plex
   jellyfin
   stow_apply
 )
@@ -92,7 +92,7 @@ repos() {
 
 copr() {
   echo "[copr] Enable COPR repositories"
-  
+
   local copr_file="$GENERAL_PKGS_DIR/copr.txt"
   local repos=($(util_read_package_list "$copr_file"))
 
@@ -108,10 +108,9 @@ copr() {
   done
 }
 
-
 dnf_install() {
   echo "[dnf_install] Install DNF packages"
-  
+
   local pkg_file="$GENERAL_PKGS_DIR/dnf.txt"
   local packages=($(util_read_package_list "$pkg_file"))
 
@@ -218,7 +217,7 @@ codecs() {
   # https://rpmfusion.org/Howto/Multimedia
 
   local prefix="[codecs]"
-  
+
   echo "$prefix Switch to full ffmpeg"
   sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
 
@@ -288,22 +287,22 @@ gnome_extensions() {
     echo "[gnome_extensions] ${url}"
   done
 
-  if command -v xdg-open &> /dev/null; then
+  if command -v xdg-open &>/dev/null; then
     read -r -p "[gnome_extensions] Open all extension pages now? [y/n] (default: y): " confirm
     confirm="${confirm:-y}"
 
     case "$confirm" in
-      y|Y)
-        for url in "${urls[@]}"; do
-          xdg-open "$url" >/dev/null 2>&1 || echo "[gnome_extensions] Failed to open $url"
-        done
-        ;;
-      n|N)
-        echo "[gnome_extensions] Skipped opening browser pages."
-        ;;
-      *)
-        echo "[gnome_extensions] Invalid response '$confirm'. Skipping browser open."
-        ;;
+    y | Y)
+      for url in "${urls[@]}"; do
+        xdg-open "$url" >/dev/null 2>&1 || echo "[gnome_extensions] Failed to open $url"
+      done
+      ;;
+    n | N)
+      echo "[gnome_extensions] Skipped opening browser pages."
+      ;;
+    *)
+      echo "[gnome_extensions] Invalid response '$confirm'. Skipping browser open."
+      ;;
     esac
   else
     echo "[gnome_extensions] xdg-open not found. Open the links above manually."
@@ -311,14 +310,14 @@ gnome_extensions() {
 }
 
 vscode() {
-  if command -v code &> /dev/null; then
+  if command -v code &>/dev/null; then
     echo "[vscode] VS Code is already installed"
     return
   fi
 
   echo "[vscode] Add VS Code repository and install Code"
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-  echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+  echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
   echo "[vscode] Install VS Code"
   sudo dnf in -y code
 }
@@ -348,7 +347,7 @@ starship() {
 
   echo "$prefix Install starship prompt"
 
-  if ! command -v starship &> /dev/null; then
+  if ! command -v starship &>/dev/null; then
     echo "$prefix Run the following command: curl -sS https://starship.rs/install.sh | sh"
   fi
 }
@@ -470,13 +469,13 @@ aliases() {
   echo "[aliases] Symlinked $source to $target"
 }
 
-adwaita_mono_nerd_font() {
-  echo "[adwaita_mono_nerd_font] Install Adwaita Mono Nerd Font"
+blex_mono_nerd_font() {
+  echo "[blex_mono_nerd_font] Install Blex Mono Nerd Font"
 
-  local font_name="AdwaitaMonoNerdFont"
+  local font_name="BlexMonoNerdFont"
   local font_dir="/usr/local/share/fonts/$font_name"
 
-  util_install_font "[adwaita_mono_nerd_font]" "$font_name" "$ADWAITA_MONO_NERD_FONT_URL" "$font_dir"
+  util_install_font "[blex_mono_nerd_font]" "$font_name" "$BLEX_MONO_NERD_FONT_URL" "$font_dir"
 }
 
 set_fonts() {
@@ -485,25 +484,21 @@ set_fonts() {
   local sans_serif_font
 
   case "$font_option" in
-    adwaita)
-      monospace_font="Adwaita Mono Nerd Font"
-      sans_serif_font="Adwaita Sans"
-      ;;
-    *)
-      echo "Usage: set_fonts {adwaita}" >&2
-      return 2
-      ;;
+  ibm_plex)
+    monospace_font="Blex Mono Nerd Font"
+    sans_serif_font="IBM Plex Sans"
+    ;;
+  *)
+    echo "Usage: set_fonts {ibm_plex}" >&2
+    return 2
+    ;;
   esac
 
   local prefix="[set_fonts $font_option]"
   local config_dir="$HOME/.config/fontconfig/conf.d"
   mkdir -p "$config_dir"
 
-  rm -f \
-    "$config_dir/99-monospace-adwaita-nerd.conf" \
-    "$config_dir/99-sans-serif-adwaita.conf"
-
-  cat > "$config_dir/99-monospace.conf" <<EOF
+  cat >"$config_dir/99-monospace.conf" <<EOF
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
@@ -516,7 +511,7 @@ set_fonts() {
 </fontconfig>
 EOF
 
-  cat > "$config_dir/99-sans-serif.conf" <<EOF
+  cat >"$config_dir/99-sans-serif.conf" <<EOF
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
@@ -535,7 +530,7 @@ EOF
   echo "$prefix Set sans-serif to $sans_serif_font"
 }
 
-set_fonts_adwaita() { set_fonts adwaita; }
+set_fonts_ibm_plex() { set_fonts ibm_plex; }
 
 jellyfin() {
   echo "[jellyfin] Set up Jellyfin media server"
@@ -552,10 +547,10 @@ jellyfin() {
   FSTAB_LINE_SHOWS="$SHOWS_DIR $JELLYFIN_SHOWS_DIR none bind 0 0"
   FSTAB_LINE_FILMS="$FILMS_DIR $JELLYFIN_FILMS_DIR none bind 0 0"
 
-  grep -qsF "$FSTAB_LINE_SHOWS" /etc/fstab || \
+  grep -qsF "$FSTAB_LINE_SHOWS" /etc/fstab ||
     echo "$FSTAB_LINE_SHOWS" | sudo tee -a /etc/fstab
 
-  grep -qsF "$FSTAB_LINE_FILMS" /etc/fstab || \
+  grep -qsF "$FSTAB_LINE_FILMS" /etc/fstab ||
     echo "$FSTAB_LINE_FILMS" | sudo tee -a /etc/fstab
 
   # Mount everything from fstab (applies immediately)
@@ -579,22 +574,22 @@ stow_apply() {
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -n|--no|--simulate)
-        dry_run=1
-        stow_flags+=(--simulate --verbose)
-        ;;
-      --adopt)
-        stow_flags+=(--adopt)
-        ;;
-      *)
-        echo "$prefix Unknown option: $1 (supported: -n, --no, --simulate, --adopt)" >&2
-        return 2
-        ;;
+    -n | --no | --simulate)
+      dry_run=1
+      stow_flags+=(--simulate --verbose)
+      ;;
+    --adopt)
+      stow_flags+=(--adopt)
+      ;;
+    *)
+      echo "$prefix Unknown option: $1 (supported: -n, --no, --simulate, --adopt)" >&2
+      return 2
+      ;;
     esac
     shift
   done
 
-  if (( dry_run )); then
+  if ((dry_run)); then
     echo "$prefix DRY RUN: no changes will be made"
   fi
 
@@ -637,8 +632,11 @@ stow_apply() {
     fi
 
     echo "$prefix Stowing package: $package"
-    "$stow_bin" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package" \
-      || { echo "$prefix Failed to stow package: $package" >&2; failed=1; }
+    "$stow_bin" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package" ||
+      {
+        echo "$prefix Failed to stow package: $package" >&2
+        failed=1
+      }
   done
 
   return "$failed"
@@ -659,12 +657,12 @@ Options:
 
 Available steps (in order):
 $(
-  i=1
-  for name in "${ALL_STEPS[@]}"; do
-    printf "  %2d) %s\n" "$i" "$name"
-    ((i++))
-  done
-)
+    i=1
+    for name in "${ALL_STEPS[@]}"; do
+      printf "  %2d) %s\n" "$i" "$name"
+      ((i++))
+    done
+  )
 EOF
 }
 
@@ -674,34 +672,34 @@ LIST_ONLY=false
 declare -a STEP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -s|--steps)
-      if [[ -n "${2-}" ]]; then
-        STEPS_ARG="$2"
-        shift 2
-        continue
-      else
-        echo "Error: --steps requires an argument" >&2
-        usage
-        exit 2
-      fi
-      ;;
-    -l|--list)
-      LIST_ONLY=true
-      shift
-      ;;
-    -h|--help)
+  -s | --steps)
+    if [[ -n "${2-}" ]]; then
+      STEPS_ARG="$2"
+      shift 2
+      continue
+    else
+      echo "Error: --steps requires an argument" >&2
       usage
-      exit 0
-      ;;
-    --)
-      shift
-      STEP_ARGS+=("$@")
-      break
-      ;;
-    *)
-      STEP_ARGS+=("$1")
-      shift
-      ;;
+      exit 2
+    fi
+    ;;
+  -l | --list)
+    LIST_ONLY=true
+    shift
+    ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+  --)
+    shift
+    STEP_ARGS+=("$@")
+    break
+    ;;
+  *)
+    STEP_ARGS+=("$1")
+    shift
+    ;;
   esac
 done
 
@@ -716,7 +714,7 @@ if [[ -z "$STEPS_ARG" ]]; then
   RUN_STEPS=("${ALL_STEPS[@]}")
 else
   declare -A requested=()
-  IFS=',' read -ra raw <<< "$STEPS_ARG"
+  IFS=',' read -ra raw <<<"$STEPS_ARG"
   for token in "${raw[@]}"; do
     # trim whitespace
     step=$(echo "$token" | xargs)
@@ -725,11 +723,11 @@ else
     fi
     if [[ "$step" =~ ^[0-9]+$ ]]; then
       idx=$((10#$step))
-      if (( idx < 1 || idx > ${#ALL_STEPS[@]} )); then
+      if ((idx < 1 || idx > ${#ALL_STEPS[@]})); then
         echo "Invalid step number: $step" >&2
         exit 2
       fi
-      name="${ALL_STEPS[$((idx-1))]}"
+      name="${ALL_STEPS[$((idx - 1))]}"
       requested["$name"]=1
     else
       # Validate name is in ALL_STEPS
@@ -757,7 +755,7 @@ fi
 
 # Dispatch by name with validation
 for s in "${RUN_STEPS[@]}"; do
-  if declare -F "$s" > /dev/null; then
+  if declare -F "$s" >/dev/null; then
     "$s" "${STEP_ARGS[@]}"
   else
     echo "Unknown step function: $s" >&2
