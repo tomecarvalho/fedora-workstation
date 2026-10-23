@@ -10,3 +10,6 @@ symbol = "☁️  "
 format = "on [$symbol$output]($style) "
 style = "bold blue"
 shell = ["bash", "--noprofile", "--norc"]
+
+[battery]
+disabled = true
