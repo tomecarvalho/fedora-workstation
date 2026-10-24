@@ -1,0 +1,23 @@
+// Zed keymap
+// Documentation: https://zed.dev/docs/key-bindings
+// See defaults: `zed: open default keymap` in command palette
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Terminal bindings that don't use tilde or backtick, for 60% keyboard.
+      "ctrl-;": "terminal_panel::Toggle",
+      "ctrl-alt-:": "workspace::NewTerminal",
+      // Remove the defaults that need tilde/backtick.
+      "ctrl-`": null,
+      "ctrl-~": null,
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // Override default ToggleLineNumbers (null doesn't fall through to Workspace).
+      "ctrl-;": "terminal_panel::Toggle",
+    },
+  },
+]
