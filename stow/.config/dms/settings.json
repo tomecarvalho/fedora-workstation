@@ -1132,5 +1132,6 @@
   "springBounce": 1,
   "enableRippleEffects": true,
   "batteryChargeLimit": 80,
-  "acProfileName": "2"
+  "acProfileName": "2",
+  "desktopContextMenu": "off"
 }
