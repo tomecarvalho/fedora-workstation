@@ -11,6 +11,7 @@ binds {
     Mod+Alt+T hotkey-overlay-title="GUI Editor (VS Code)" { spawn "code"; }
     Mod+M hotkey-overlay-title="System Monitor (dgop)" { spawn "kitty" "--class" "dgop" "-e" "dgop"; }
     Mod+Shift+M hotkey-overlay-title="GUI Sytem Monitor" { spawn "dms" "ipc" "call" "processlist" "focusOrToggle"; }
+    Mod+Comma hotkey-overlay-title="Notes (Obsidian)" { spawn "flatpak" "run" "md.obsidian.Obsidian"; }
 
     // Launchers & Shell Panels
     Mod+Space hotkey-overlay-title="Application Launcher" repeat=false { spawn "dms" "ipc" "call" "spotlight" "toggle"; }

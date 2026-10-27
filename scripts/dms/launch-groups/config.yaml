@@ -30,6 +30,11 @@ groups:
           output: eDP-1
           workspace: 1
           command: cursor
+        - app_id: '^(obsidian|md\.obsidian\.Obsidian)$'
+          reuse: true
+          output: eDP-1
+          workspace: 2
+          command: flatpak run md.obsidian.Obsidian
 
       eDP-1:
         - app_id: '^(cursor|com\.todesktop\.[^ ]+)$'
@@ -42,13 +47,18 @@ groups:
           output: eDP-1
           workspace: 2
           command: firefox
-        - app_id: '^(slack|com\.slack\.Slack)$'
+        - app_id: '^(obsidian|md\.obsidian\.Obsidian)$'
           reuse: true
           output: eDP-1
           workspace: 3
+          command: flatpak run md.obsidian.Obsidian
+        - app_id: '^(slack|com\.slack\.Slack)$'
+          reuse: true
+          output: eDP-1
+          workspace: 4
           command: slack
         - app_id: '^(thunderbird|org\.mozilla\.Thunderbird|net\.thunderbird\.Thunderbird)$'
           reuse: true
           output: eDP-1
-          workspace: 3
+          workspace: 4
           command: thunderbird
