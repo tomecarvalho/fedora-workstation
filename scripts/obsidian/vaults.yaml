@@ -1,0 +1,12 @@
+root: ~/Documents/obsidian
+vaults:
+  - name: personal
+    ssh_host: github.com
+    repo: tomecarvalho/obsidian
+    git_name: Tomé Carvalho
+    git_email: tomecarv@gmail.com
+  - name: mobinteg
+    ssh_host: github-mobinteg
+    repo: tcarvalho-mobinteg/obsidian
+    git_name: Tomé Carvalho
+    git_email: tcarvalho@mobinteg.com

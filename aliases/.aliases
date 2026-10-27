@@ -41,7 +41,7 @@ dconf_push() {
 
 # Enables the cursor command to open files or directories through the terminal.
 cursor() {
-	"$CURSOR_PATH" --no-sandbox "$@"
+  "$CURSOR_PATH" --no-sandbox "$@"
 }
 
 # Start a systemd service.
@@ -56,17 +56,17 @@ stop() {
 
 # Backup a project directory, excluding common package manager caches and dependencies, recursively.
 backup_projects() {
-	"$BACKUP_SCRIPTS_PATH/backup-projects.sh" "$@"
+  "$BACKUP_SCRIPTS_PATH/backup-projects.sh" "$@"
 }
 
 # Backup select directories and files from the home directory.
 backup_home() {
-	"$BACKUP_SCRIPTS_PATH/backup-home.sh"
+  "$BACKUP_SCRIPTS_PATH/backup-home.sh"
 }
 
 # Sync home backup paths (and optional projects) to another local-network machine.
 sync_local() {
-	"$BACKUP_SCRIPTS_PATH/sync-local.sh" "$@"
+  "$BACKUP_SCRIPTS_PATH/sync-local.sh" "$@"
 }
 
 keep_awake() {
@@ -86,4 +86,14 @@ fct() {
 # Paste files from the clipboard into a directory (default: .) (Wayland).
 fpst() {
   "$SCRIPTS_PATH/files/paste.sh" "$@"
+}
+
+# Obsidian: set up vaults
+vault_setup() {
+  "$SCRIPTS_PATH/obsidian/vault-setup.sh" "$@"
+}
+
+# Obsidian: push vault
+vault_push() {
+  "$SCRIPTS_PATH/obsidian/vault-push.sh" "$@"
 }
